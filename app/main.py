@@ -15,7 +15,7 @@ async def verify_webhook(request: Request):
     hub_verify_token = params.get("hub.verify_token")
     hub_challenge = params.get("hub.challenge")
 
-    VERIFY_TOKEN = "mi_token_secreto"
+    VERIFY_TOKEN = "bot_automotriz_zabaleoMotors_2026"
 
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
         return int(hub_challenge)
