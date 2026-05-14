@@ -5,6 +5,10 @@ app = FastAPI()
 
 VERIFY_TOKEN = "bot_automotriz_zabaleoMotors_2026"
 
+@app.get("/")
+async def home():
+    return {"status": "online"}
+
 @app.get("/webhook")
 async def verify_webhook(request: Request):
 
@@ -28,4 +32,3 @@ async def receive_message(request: Request):
     print(body)
 
     return {"status": "ok"}
-
