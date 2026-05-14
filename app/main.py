@@ -3,6 +3,7 @@ from fastapi.responses import PlainTextResponse
 from dotenv import load_dotenv
 import os
 import requests
+import traceback
 
 load_dotenv()
 
@@ -55,7 +56,7 @@ async def receive_message(request: Request):
 
     except Exception as e:
         print("ERROR:")
-        print(e)
+    traceback.print_exc()
 
     return {"status": "ok"}
 
