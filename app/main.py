@@ -1,10 +1,9 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import PlainTextResponse
 
 app = FastAPI()
 
-@app.get("/")
-def home():
-    return {"mensaje": "Bot automotriz funcionando"}
+VERIFY_TOKEN = "bot_automotriz_zabaleoMotors_2026"
 
 @app.get("/webhook")
 async def verify_webhook(request: Request):
@@ -15,10 +14,8 @@ async def verify_webhook(request: Request):
     hub_verify_token = params.get("hub.verify_token")
     hub_challenge = params.get("hub.challenge")
 
-    VERIFY_TOKEN = "bot_automotriz_zabaleoMotors_2026"
-
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
-        return int(hub_challenge)
+        return PlainTextResponse(content=hub_challenge)
 
     return {"error": "Token inválido"}
 
@@ -31,3 +28,4 @@ async def receive_message(request: Request):
     print(body)
 
     return {"status": "ok"}
+
