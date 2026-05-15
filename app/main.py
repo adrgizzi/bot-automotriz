@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import traceback
+import pandas as pd
 
 # =========================
 # CARGAR VARIABLES ENTORNO
@@ -50,6 +51,23 @@ def send_message(recipient_id, message_text):
     print("RESPUESTA META:")
     print(response.status_code)
     print(response.text)
+
+# =========================
+# FUNCION BUSCAR EN LISTA DE AUTOS 
+# =========================
+
+def buscar_autos(query):
+
+    SHEET_URL = "https://docs.google.com/spreadsheets/d/1fEmcM4fzV2TwmzyZVqF9yS2mxH305CarUKURpC4t1xo/edit?usp=csv"
+
+    df = pd.read_csv(SHEET_URL)
+
+    resultados = df[
+        df["modelo"].str.lower().str.contains(query.lower(), na=False)
+    ]
+
+    return resultados    
+
 
 # =========================
 # HOME
@@ -158,3 +176,4 @@ async def receive_message(request: Request):
     return {
         "status": "ok"
     }
+    
