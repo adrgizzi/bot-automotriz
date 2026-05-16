@@ -2,9 +2,9 @@ from .sheets import buscar_autos
 
 def generar_respuesta(texto):
 
-    autos = buscar_autos(texto) 
+    autos = buscar_autos(texto)
 
-    if not autos.empty:
+    if len(autos) > 0:
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
 
@@ -15,15 +15,8 @@ def generar_respuesta(texto):
                 f"{auto['modelo']} "
                 f"{auto['año']} - "
                 f"USD {auto['precio']}\n"
-                f"{auto['transmisión']} - "
-                f"{auto['combustible']}\n"
-                f"{auto['km']} km\n"
-                f"Agencia: {auto['agencia']}\n\n"
             )
 
         return respuesta
 
     return "No encontré vehículos con esa búsqueda 😕"
-
-
-#fallas en amarillo 
