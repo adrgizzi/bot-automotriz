@@ -1,4 +1,4 @@
-from app.services.sheets import buscar_autos
+from .sheets import buscar_autos
 
 def generar_respuesta(texto):
 
@@ -24,3 +24,6 @@ def generar_respuesta(texto):
         return respuesta
 
     return "No encontré vehículos con esa búsqueda 😕"
+
+
+#fallas en amarillo 
