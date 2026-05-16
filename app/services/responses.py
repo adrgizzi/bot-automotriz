@@ -2,7 +2,7 @@ from app.services.sheets import buscar_autos
 
 def generar_respuesta(texto):
 
-    autos = buscar_autos(texto)
+    autos = buscar_autos(texto) 
 
     if not autos.empty:
 
