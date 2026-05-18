@@ -12,5 +12,8 @@ def buscar_autos(texto):
         df["marca"].str.lower().str.contains(texto, na=False) |
         df["modelo"].str.lower().str.contains(texto, na=False)
     ]
-
+    print(df.head())
+    print(texto)
+    print(resultados)
     return resultados
+   
