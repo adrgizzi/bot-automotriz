@@ -28,14 +28,18 @@ def generar_respuesta(texto):
         for _, auto in autos.iterrows():
 
             respuesta += (
-                f"🚗 {auto['marca']} {auto['modelo']}\n"
-                f"📅 Año: {int(auto(['año']))}\n"
-                f"💵 Precio: {(int(auto['precio']))}\n"
-                f"⚙️ Transmisión: {auto['transmisión']}\n"
-                f"⛽ Combustible: {auto['combustible']}\n"
-                f"🛣️ KM: {(int(auto['km']))}\n\n" # con int convierto un float en un entero , le saca los decimales 
-                #f"🏢 Agencia: {auto['agencia']}\n\n"
-            )
+            f"🚗 {auto['marca']} {auto['modelo']}\n"
+            f"📅 Año: {int(auto['año'])}\n"
+            f"💵 Precio: {int(auto['precio'])}\n"
+            f"⚙️ Transmisión: {auto['transmisión']}\n"
+            f"⛽ Combustible: {auto['combustible']}\n"
+            f"🛣️ KM: {int(auto['km'])}\n\n"# con int convierto un float en un entero , le saca los decimales 
+            #f"🏢 Agencia: {auto['agencia']}\n\n"
+)
+                
+                
+                
+            
 
         respuesta += (
             "\n👉 ¿Cuál te interesa más?\n"
