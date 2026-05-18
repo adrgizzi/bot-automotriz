@@ -5,8 +5,9 @@ SHEET_URL = "https://docs.google.com/spreadsheets/d/1fEmcM4fzV2TwmzyZVqF9yS2mxH3
 def buscar_autos(texto):
 
     df = pd.read_csv(SHEET_URL)
+    print("COLUMNAS:", df.columns.tolist()) 
 
-    print(df.head())  # muestra las primeras filas de la planilla
+    print(df.head())  # muestra las primeras filas de la planilla . debug temporal 
 
     texto = texto.lower()
 
@@ -21,3 +22,4 @@ def buscar_autos(texto):
     print(resultados)
 
     return resultados
+
