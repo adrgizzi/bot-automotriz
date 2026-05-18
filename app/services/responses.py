@@ -15,9 +15,9 @@ def generar_respuesta(texto):
                 f"{auto['modelo']} "
                 f"{auto['año']} - "
                 f"{auto['precio']} - "
-                f"Transmision {auto['transmisión']} - "
-                f"Combustible {auto['combustible']} - "
-                f"Kilometros {auto['km']}\n"
+                f"Transmision : {auto['transmisión']} - "
+                f"Combustible : {auto['combustible']} - "
+                f"Kilometros : {auto['km']}\n"
             )
 
         return respuesta
