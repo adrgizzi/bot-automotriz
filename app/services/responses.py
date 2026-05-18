@@ -1,8 +1,8 @@
 import pandas as pd
 from app.services.sheets import buscar_autos
+from app.services.memory import usuarios
 
-
-def generar_respuesta(texto):
+def generar_respuesta(sender_id, texto):
 
     texto = texto.lower()
 
@@ -16,17 +16,47 @@ def generar_respuesta(texto):
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
             "¿Qué vehículo estás buscando?"
         )
+    #=====================
+    # USUARIO EN CONVERSACION
+    # =====================
 
+    if sender_id in usuarios:
+
+        estado = usuarios[sender_id]["estado"]
+
+        if estado == "esperando_interes":
+
+            if "financi" in texto:
+                return "Tenemos financiación"
+
+            elif "permuta" in texto:
+                return "Tomamos permutas"
+            
+            elif "foto" in texto:
+                return "Te enviamos mas fotos enseguida 📸 "
+            
+            else :
+                return("Puedo ayudarte con : \n"
+                       "▫️ Financiacion \n "
+                       "▫️ Permutas \n"
+                       "▫️ Mas Fotos ")
     # =========================
     # BUSCAR AUTOS
     # =========================
-
+    
     autos = buscar_autos(texto)
 
     if len(autos) > 0:
+        usuarios[sender_id] = {
+    "ultimo_modelo": texto,
+    "ultima_consulta": texto,#"autos_encontrados": autos.to_dict('records'),
+    "estado": "esperando_interes"
+},
+            
+           
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
-
+      
         for _, auto in autos.iterrows():
             
             # AÑO
@@ -68,14 +98,17 @@ def generar_respuesta(texto):
                 f"⛽ Combustible: {auto['combustible']}\n"
                 f"🛣️ KM: {km_str}\n\n"
             )
+          
 
         respuesta += (
             "\n👉 ¿Cuál te interesa más?\n"
             "Puedo ayudarte con financiación, permutas o más fotos."
         )
+        
 
+            
         return respuesta
-
+    
     # =========================
     # DEFAULT
     # =========================
