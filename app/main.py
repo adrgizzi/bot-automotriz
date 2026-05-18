@@ -77,7 +77,7 @@ async def receive_message(request: Request):
 
             user_message = messaging["message"].get("text", "")
 
-            respuesta = generar_respuesta(user_message)
+            respuesta = generar_respuesta(sender_id, user_message)
             # generar respuesta
 
             send_message(sender_id, respuesta)
