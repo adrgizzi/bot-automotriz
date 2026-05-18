@@ -35,12 +35,7 @@ def generar_respuesta(texto):
             f"⛽ Combustible: {auto['combustible']}\n"
             f"🛣️ KM: {int(auto['km'])}\n\n"# con int convierto un float en un entero , le saca los decimales 
             #f"🏢 Agencia: {auto['agencia']}\n\n"
-)
-                
-                
-                
-            
-
+    )
         respuesta += (
             "\n👉 ¿Cuál te interesa más?\n"
             "Puedo ayudarte con financiación, permutas o más fotos."
