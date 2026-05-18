@@ -60,7 +60,7 @@ def generar_respuesta(texto):
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
                 f"📅 Año: {int(anio) if pd.notna(anio) else 'N/D'}\n"
                 f"💵 Precio: {precio}\n"
-                f"⚙️ Transmisión: {auto['transmisión']}\n"
+                f"⚙️ Transmisión: {auto['transmision']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"
                 f"🛣️ KM: {int(km) if pd.notna(km) else 'N/D'}\n\n"
             )
