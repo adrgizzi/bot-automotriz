@@ -14,7 +14,7 @@ def generar_respuesta(texto):
                 f"{auto['marca']} "
                 f"{auto['modelo']} "
                 f"{auto['año']} - "
-                f"USD {auto['precio']}\n"
+                f"{auto['precio']}\n"
             )
 
         return respuesta
