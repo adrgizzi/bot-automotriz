@@ -45,12 +45,17 @@ def generar_respuesta(texto):
             else:
                 precio = "Consultar"
 
-            # ==========
             # VARIABLES
-            # ==========
-
             anio = auto['año']
+            anio_str = str(int(float(str(anio).replace(',', '.')))) if pd.notna(anio) else "N/D"
+
+# # LIMPIAR KM
             km = auto['km']
+            if pd.notna(km):
+                km_limpio = str(km).replace('.', '').replace(',', '')
+                km_str = km_limpio
+            else:
+                km_str = "N/D"
 
             # ==========
             # RESPUESTA
@@ -58,11 +63,11 @@ def generar_respuesta(texto):
 
             respuesta += (
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
-                f"📅 Año: {int(anio) if pd.notna(anio) else 'N/D'}\n"
+                f"📅 Año: {anio_str}\n"
                 f"💵 Precio: {precio}\n"
                 f"⚙️ Transmisión: {auto['transmision']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"
-                f"🛣️ KM: {int(km) if pd.notna(km) else 'N/D'}\n\n"
+                f"🛣️ KM: {km_str}\n\n"
             )
 
         respuesta += (
