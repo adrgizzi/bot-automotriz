@@ -14,7 +14,7 @@ def generar_respuesta(texto):
 
         return (
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
-            "¿Qué vehículo estás buscando.?"
+            "¿Qué vehículo estás buscando?"
         )
 
     # =========================
