@@ -4,13 +4,14 @@ def generar_respuesta(texto):
 
     autos = buscar_autos(texto)
     
-    if "hola" in texto or "buenas" in texto:
-        return (
-        "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
-        "¿Qué vehículo estás buscando?"
-    )
+    
 
     if len(autos) > 0:
+        if "hola" in texto or "buenas" in texto:
+            return (
+        "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
+        "¿Qué vehículo estás buscando?"
+)
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
 
@@ -19,7 +20,7 @@ def generar_respuesta(texto):
             respuesta += (
              f"🚗 {auto['marca']} {auto['modelo']}\n"
             f"📅 Año: {auto['año']}\n"
-            f"💵 Precio: USD {auto['precio']}\n"
+            f"💵 Precio: {auto['precio']}\n"
             f"⚙️ Transmisión: {auto['transmisión']}\n"
             f"⛽ Combustible: {auto['combustible']}\n"
             f"🛣️ KM: {auto['km']}\n" 
