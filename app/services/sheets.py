@@ -7,7 +7,7 @@ def buscar_autos(texto):
     df = pd.read_csv(SHEET_URL)
     print("COLUMNAS:", df.columns.tolist()) 
 
-    print(df.head())  # muestra las primeras filas de la planilla . debug temporal 
+    #print(df.head())  # muestra las primeras filas de la planilla . debug temporal 
 
     texto = texto.lower()
 
