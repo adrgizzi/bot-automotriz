@@ -6,14 +6,18 @@ def buscar_autos(texto):
 
     df = pd.read_csv(SHEET_URL)
 
+    print(df.head())  # muestra las primeras filas de la planilla
+
     texto = texto.lower()
+
+    print("Texto recibido:", texto)
 
     resultados = df[
         df["marca"].str.lower().str.contains(texto, na=False) |
         df["modelo"].str.lower().str.contains(texto, na=False)
     ]
-    print(df.head())
-    print(texto)
+
+    print("Resultados encontrados:")
     print(resultados)
+
     return resultados
-   
