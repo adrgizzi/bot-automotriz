@@ -28,37 +28,36 @@ def generar_respuesta(texto):
         respuesta = "Encontré estos vehículos 🚗\n\n"
 
         for _, auto in autos.iterrows():
+            
+            # AÑO
+            anio = auto['año']
+            anio_str = str(int(float(str(anio)))) if pd.notna(anio) else "N/D"
+
 
             # ==========
             # LIMPIAR PRECIO
             # ==========
 
+          # LIMPIAR PRECIO
             precio = auto['precio']
-
             if pd.notna(precio):
-
-                precio = str(precio)
-                precio = precio.replace("$", "")
-                precio = precio.replace(".", "")
-                precio = precio.strip()
-
+                precio = str(precio).replace("$", "").strip()
+                # Convertir a número y formatear con puntos
+                precio_num = int(str(precio).replace(".", "").replace(",", ""))
+                precio = f"${precio_num:,}".replace(",", ".")
             else:
                 precio = "Consultar"
 
-            # VARIABLES
-            anio = auto['año']
-            anio_str = str(int(float(str(anio).replace(',', '.')))) if pd.notna(anio) else "N/D"
-
-# # LIMPIAR KM
+# LIMPIAR KM
             km = auto['km']
             if pd.notna(km):
-                km_limpio = str(km).replace('.', '').replace(',', '')
-                km_str = km_limpio
+                km_num = int(str(km).replace(".", "").replace(",00", ""))
+                km_str = f"{km_num:,}".replace(",", ".")
             else:
                 km_str = "N/D"
 
             # ==========
-            # RESPUESTA
+            # RESPUESTA 
             # ==========
 
             respuesta += (
