@@ -29,11 +29,11 @@ def generar_respuesta(texto):
 
             respuesta += (
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
-                f"📅 Año: {auto['año']}\n"
-                f"💵 Precio: {auto['precio']}\n"
+                f"📅 Año: {int(auto(['año']))}\n"
+                f"💵 Precio: {(int(auto['precio']))}\n"
                 f"⚙️ Transmisión: {auto['transmisión']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"
-                f"🛣️ KM: {auto['km']}\n\n"
+                f"🛣️ KM: {(int(auto['km']))}\n\n" # con int convierto un float en un entero , le saca los decimales 
                 #f"🏢 Agencia: {auto['agencia']}\n\n"
             )
 
