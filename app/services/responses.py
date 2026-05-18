@@ -2,7 +2,7 @@ from app.services.sheets import buscar_autos
 
 def generar_respuesta(texto):
 
-    texto = texto.lower()
+    texto = texto.lower() # Esto realiza el pasado automatico de cualquier saludo este bien o mal escrito 
 
     # =========================
     # SALUDOS
@@ -33,8 +33,8 @@ def generar_respuesta(texto):
                 f"💵 Precio: {auto['precio']}\n"
                 f"⚙️ Transmisión: {auto['transmisión']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"
-                f"🛣️ KM: {auto['km']}\n"
-                f"🏢 Agencia: {auto['agencia']}\n\n"
+                f"🛣️ KM: {auto['km']}\n\n"
+                #f"🏢 Agencia: {auto['agencia']}\n\n"
             )
 
         respuesta += (
@@ -49,3 +49,9 @@ def generar_respuesta(texto):
     # =========================
 
     return "No encontré vehículos con esa búsqueda 😕"
+
+
+#Primero:
+#saludos
+#intenciones
+#conversación
