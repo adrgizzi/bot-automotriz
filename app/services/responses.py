@@ -48,12 +48,10 @@ def generar_respuesta(sender_id, texto):
 
     if len(autos) > 0:
         usuarios[sender_id] = {
-    "ultimo_modelo": texto,
-    "ultima_consulta": texto,#"autos_encontrados": autos.to_dict('records'),
-    "estado": "esperando_interes"
-},
+            "ultimo_modelo": texto,
+            "estado": "esperando_interes"
+}
             
-           
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
       
