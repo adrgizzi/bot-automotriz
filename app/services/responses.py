@@ -11,7 +11,7 @@ from app.services.intents import (
     es_financiacion,
     es_permuta,
     es_fotos,
-    parece_busqueda_auto
+    parece_busqueda_auto #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
 )
 
 def generar_respuesta(sender_id, texto):
@@ -102,6 +102,7 @@ def generar_respuesta(sender_id, texto):
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
                 f"📅 Año: {anio_str}\n"
                 f"💵 Precio: {precio}\n"
+                f"🎨 Color : {auto["color"]}\n"
                 f"⚙️ Transmisión: {auto['transmision']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"  
                 f"🛣️ KM: {km_str}\n\n"
