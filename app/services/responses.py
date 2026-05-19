@@ -97,7 +97,7 @@ def generar_respuesta(sender_id, texto):
                 f"📅 Año: {anio_str}\n"
                 f"💵 Precio: {precio}\n"
                 f"⚙️ Transmisión: {auto['transmision']}\n"
-                f"⛽ Combustible: {auto['combustible']}\n"
+                f"⛽ Combustible: {auto['combustible']}\n"  
                 f"🛣️ KM: {km_str}\n\n"
             )
 
@@ -147,9 +147,9 @@ def generar_respuesta(sender_id, texto):
     # 4. DEFAULT
     # =========================
 
-    return (
-        "No encontré vehículos con esa búsqueda 😕\n"
-        "Probá escribiendo una marca o modelo, por ejemplo: Fiat, Toyota, Hilux, Cronos."
+        return (
+             "No encontré vehículos con esa búsqueda 😕\n"
+             "Probá escribiendo una marca o modelo, por ejemplo: Fiat, Toyota, Hilux, Cronos."
     )
 #Primero:
 #saludos
