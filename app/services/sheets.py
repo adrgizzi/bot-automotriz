@@ -14,19 +14,17 @@ def obtener_dataframe():
 
 
 def buscar_autos(texto):
-
     texto = texto.lower()
-
     df = obtener_dataframe()
-    print(df["marca"])
-    print(texto)
-
-    df["marca"] = df["marca"].astype(str).str.lower().str.strip()
-    df["modelo"] = df["modelo"].astype(str).str.lower().str.strip()
-
+    
+    # Comparar en minúsculas pero sin modificar el df original
+    marca_lower = df["marca"].astype(str).str.lower().str.strip()
+    modelo_lower = df["modelo"].astype(str).str.lower().str.strip()
+    
     resultado = df[
-        df["marca"].str.contains(texto, na=False) |
-        df["modelo"].str.contains(texto, na=False)
+        marca_lower.str.contains(texto, na=False) |
+        modelo_lower.str.contains(texto, na=False)
     ]
+    
 
     return resultado
