@@ -112,7 +112,6 @@ def generar_respuesta(sender_id, texto):
                        "▫️ Mas Fotos ")
 
             
-        return respuesta
     
     # =========================
     # DEFAULT
