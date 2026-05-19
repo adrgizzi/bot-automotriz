@@ -1,6 +1,7 @@
 import pandas as pd
 from app.services.sheets import buscar_autos
 from app.services.memory import usuarios
+from app.services.conversation import (responder_financiacion, responder_permuta)
 
 def generar_respuesta(sender_id, texto):
 
@@ -27,10 +28,10 @@ def generar_respuesta(sender_id, texto):
         if estado == "esperando_interes":
 
             if "financi" in texto:
-                return "Tenemos financiación"
+                return responder_financiacion()
 
             elif "permuta" in texto:
-                return "Tomamos permutas"
+                return responder_permuta()
             
             elif "foto" in texto:
                 return "Te enviamos mas fotos enseguida 📸 "
