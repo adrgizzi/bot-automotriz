@@ -85,6 +85,7 @@ def generar_respuesta(sender_id, texto):
             "\n👉 ¿Cuál te interesa más?\n"
             "Puedo ayudarte con financiación, permutas o más fotos."
         )
+        return respuesta
          #=====================
     # USUARIO EN CONVERSACION
     # =====================
