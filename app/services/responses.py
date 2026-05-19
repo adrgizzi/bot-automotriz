@@ -65,6 +65,8 @@ def generar_respuesta(sender_id, texto):
             else:
                 km_str = "N/D"
 
+        
+
             # ==========
             # RESPUESTA 
             # ==========
