@@ -110,7 +110,7 @@ def generar_respuesta(sender_id, texto):
                        "▫️ Financiacion \n "
                        "▫️ Permutas \n "
                        "▫️ Mas Fotos ")
-
+        return respuesta
             
     
     # =========================
