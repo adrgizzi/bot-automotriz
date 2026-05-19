@@ -132,25 +132,21 @@ def generar_respuesta(sender_id, texto):
                     "Te enviamos más fotos enseguida 📸\n"
                     "También puedo derivarte con un asesor si querés ver más detalles."
                 )
-
+            # =========================
+            # 4. DEFAULT.  # Esto esta mas arriba y es una ultima instacion 
+            # =========================
             else:
-
                 return (
-                    "Puedo ayudarte con:\n"
-                    "▫️ Financiación\n"
-                    "▫️ Permutas\n"
-                    "▫️ Más fotos\n\n"
-                    "Decime qué opción te interesa."
-                )
-
-    # =========================
-    # 4. DEFAULT
-    # =========================
-
-        return (
-             "No encontré vehículos con esa búsqueda 😕\n"
-             "Probá escribiendo una marca o modelo, por ejemplo: Fiat, Toyota, Hilux, Cronos."
+                "No encontré ese vehículo disponible por ahora 😕.\n\n"
+                "Pero puedo ayudarte a buscar una alternativa similar dentro del stock.\n"
+                "Podés consultar por marca o modelo, por ejemplo:\n"
+                "▫️ Toyota\n"
+                "▫️ Fiat\n"
+                "▫️ Jeep\n"
+                "▫️ Chevrolet"
     )
+    
+
 #Primero:
 #saludos
 #intenciones
