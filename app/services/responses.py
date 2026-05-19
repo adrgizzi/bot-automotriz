@@ -6,7 +6,13 @@ from app.services.conversation import (
     responder_financiacion,
     responder_permuta
 )
-
+from app.services.intents import ( 
+    es_saludo,
+    es_financiacion,
+    es_permuta,
+    es_fotos,
+    parece_busqueda_auto
+)
 
 def generar_respuesta(sender_id, texto):
 
@@ -16,7 +22,7 @@ def generar_respuesta(sender_id, texto):
     # 1. SALUDOS
     # =========================
 
-    if "hola" in texto or "buenas" in texto:
+    if es_saludo(texto):
 
         return (
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
@@ -118,24 +124,24 @@ def generar_respuesta(sender_id, texto):
 
         if estado == "esperando_interes":
 
-            if "financi" in texto:
+            if es_financiacion(texto):
 
                 return responder_financiacion()
 
-            elif "permuta" in texto:
+            elif  es_permuta(texto):
 
                 return responder_permuta()
 
-            elif "foto" in texto:
+            elif  es_fotos(texto):
 
                 return (
                     "Te enviamos más fotos enseguida 📸\n"
                     "También puedo derivarte con un asesor si querés ver más detalles."
                 )
             # =========================
-            # 4. DEFAULT.  # Esto esta mas arriba y es una ultima instacion 
+            # 4. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
-            else:
+            if parece_busqueda_auto(texto):
                 return (
                 "No encontré ese vehículo disponible por ahora 😕.\n\n"
                 "Pero puedo ayudarte a buscar una alternativa similar dentro del stock.\n"
@@ -146,7 +152,14 @@ def generar_respuesta(sender_id, texto):
                 "▫️ Chevrolet"
     )
     
+ # =========================
+    # 5. DEFAULT
+    # =========================
 
+    return (
+        "No entendí bien tu consulta 😕\n"
+        "Podés escribirme una marca o modelo, por ejemplo: Toyota, Fiat, Hilux o Cronos."
+    )
 #Primero:
 #saludos
 #intenciones
