@@ -1,7 +1,10 @@
 import pandas as pd
 from app.services.sheets import buscar_autos
 from app.services.memory import usuarios
-from app.services.conversation import (responder_financiacion, responder_permuta)
+from app.services.conversation import (
+    responder_financiacion,
+    responder_permuta
+) # Esta logica se puede dividir en dos import   from app.services.conversation import responder_financiacion # from app.services.conversation import responder_permuta
 
 def generar_respuesta(sender_id, texto):
 
@@ -17,30 +20,7 @@ def generar_respuesta(sender_id, texto):
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
             "¿Qué vehículo estás buscando?"
         )
-    #=====================
-    # USUARIO EN CONVERSACION
-    # =====================
-
-    if sender_id in usuarios:
-
-        estado = usuarios[sender_id]["estado"]
-
-        if estado == "esperando_interes":
-
-            if "financi" in texto:
-                return responder_financiacion()
-
-            elif "permuta" in texto:
-                return responder_permuta()
-            
-            elif "foto" in texto:
-                return "Te enviamos mas fotos enseguida 📸 "
-            
-            else :
-                return("Puedo ayudarte con : \n"
-                       "▫️ Financiacion \n "
-                       "▫️ Permutas \n"
-                       "▫️ Mas Fotos ")
+   
     # =========================
     # BUSCAR AUTOS
     # =========================
@@ -103,7 +83,30 @@ def generar_respuesta(sender_id, texto):
             "\n👉 ¿Cuál te interesa más?\n"
             "Puedo ayudarte con financiación, permutas o más fotos."
         )
-        
+         #=====================
+    # USUARIO EN CONVERSACION
+    # =====================
+
+    if sender_id in usuarios:
+
+        estado = usuarios[sender_id]["estado"]
+
+        if estado == "esperando_interes":
+
+            if "financi" in texto:
+                return responder_financiacion()
+
+            elif "permuta" in texto:
+                return responder_permuta()
+            
+            elif "foto" in texto:
+                return "Te enviamos mas fotos enseguida 📸 "
+            
+            else :
+                return("Puedo ayudarte con : \n"
+                       "▫️ Financiacion \n "
+                       "▫️ Permutas \n "
+                       "▫️ Mas Fotos ")
 
             
         return respuesta
