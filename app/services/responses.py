@@ -105,7 +105,7 @@ def generar_respuesta(sender_id, texto):
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
                 f"📅 Año: {anio_str}\n"
                 f"💵 Precio: {precio}\n"
-                f"🎨 Color : {color}\n"
+                f"🎨 Color: {color}\n"
                 f"⚙️ Transmisión: {auto['transmision']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"  
                 f"🛣️ KM: {km_str}\n\n"
