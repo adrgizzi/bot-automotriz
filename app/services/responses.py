@@ -93,7 +93,8 @@ def generar_respuesta(sender_id, texto):
                 km_str = f"{km_num:,}".replace(",", ".")
             else:
                 km_str = "N/D"
-
+            
+            color = auto["color"] if pd.notna(auto["color"]) else "Consultar"
             # =========================
             # ARMAR RESPUESTA DEL AUTO
             # =========================
@@ -102,7 +103,7 @@ def generar_respuesta(sender_id, texto):
                 f"🚗 {auto['marca']} {auto['modelo']}\n"
                 f"📅 Año: {anio_str}\n"
                 f"💵 Precio: {precio}\n"
-                f"🎨 Color : {auto["color"]}\n"
+                f"🎨 Color : {auto[color]}\n"
                 f"⚙️ Transmisión: {auto['transmision']}\n"
                 f"⛽ Combustible: {auto['combustible']}\n"  
                 f"🛣️ KM: {km_str}\n\n"
