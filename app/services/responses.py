@@ -14,7 +14,7 @@ from app.services.intents import (
     es_permuta,
     es_fotos,
     parece_busqueda_auto , #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
-      es_asesor
+    es_asesor
 )
 
 

@@ -14,7 +14,6 @@ def responder_permuta():
         "Si querés, puedo derivarte con un asesor para evaluar tu unidad.\n"
         "Escribí: asesor"
     )
-    
 
 def responder_derivacion_asesor(modelo=None):
     numero_whatsapp = "5493512201289"  # reemplazar por el número real
@@ -30,5 +29,22 @@ def responder_derivacion_asesor(modelo=None):
         "Perfecto 😊\n"
         "Te puedo derivar con un asesor para continuar la consulta.\n\n"
         f"📲 Escribinos por WhatsApp acá:\n"
+        f"https://wa.me/{numero_whatsapp}?text={mensaje_url}"
+    )
+    
+def responder_fotos(modelo=None):
+    numero_whatsapp = "5493512201289"  # Numero real , No enviar a ningun otro lugar 
+
+    mensaje = "Hola, vengo desde el bot de Zabaleo Motors y quiero ver fotos"
+
+    if modelo:
+        mensaje += f" de {modelo}"
+
+    mensaje_url = mensaje.replace(" ", "%20")
+
+    return (
+        "Perfecto 📸\n"
+        "Para enviarte fotos reales de la unidad exacta, te derivo con un asesor.\n\n"
+        "📲 Escribinos por WhatsApp acá:\n"
         f"https://wa.me/{numero_whatsapp}?text={mensaje_url}"
     )
