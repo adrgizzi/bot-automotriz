@@ -5,7 +5,8 @@ from app.services.memory import usuarios
 from app.services.conversation import (
     responder_financiacion,
     responder_permuta ,
-    responder_derivacion_asesor
+    responder_derivacion_asesor ,
+    responder_fotos
 )
 from app.services.intents import ( 
     es_saludo,
@@ -144,7 +145,6 @@ def generar_respuesta(sender_id, texto):
         if estado == "esperando_interes":
             
            
-
             if es_financiacion(texto):
 
                 return responder_financiacion()
@@ -153,14 +153,11 @@ def generar_respuesta(sender_id, texto):
 
                 return responder_permuta()
 
-            elif  es_fotos(texto):
+            elif es_fotos(texto):
 
-                return (
-                    "Te enviamos más fotos enseguida 📸\n"
-                    "También puedo derivarte con un asesor si querés ver más detalles."
-                )
-                
-    
+                modelo = usuarios[sender_id].get("ultimo_modelo")
+                return responder_fotos(modelo) #aca deriava inmediatamente a un asesor 
+            
             # =========================
             # 5. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
