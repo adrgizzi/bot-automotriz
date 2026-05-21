@@ -4,15 +4,18 @@ from app.services.sheets import buscar_autos
 from app.services.memory import usuarios
 from app.services.conversation import (
     responder_financiacion,
-    responder_permuta
+    responder_permuta ,
+    responder_derivacion_asesor
 )
 from app.services.intents import ( 
     es_saludo,
     es_financiacion,
     es_permuta,
     es_fotos,
-    parece_busqueda_auto #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
+    parece_busqueda_auto , #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
+      es_asesor
 )
+
 
 def generar_respuesta(sender_id, texto):
 
@@ -28,9 +31,21 @@ def generar_respuesta(sender_id, texto):
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
             "¿Qué vehículo estás buscando?"
         )
+# =========================
+# 2. DERIVAR A ASESOR
+# =========================
+    print(f"Texto recibido para intención asesor: {texto}")
+    print(f"Es asesor?: {es_asesor(texto)}")
+    if es_asesor(texto):
 
+        modelo = None
+
+    if sender_id in usuarios:
+        modelo = usuarios[sender_id].get("ultimo_modelo")
+
+        return responder_derivacion_asesor(modelo)
     # =========================
-    # 2. BUSCAR AUTOS
+    # 3. BUSCAR AUTOS
     # =========================
 
     autos = buscar_autos(texto)
@@ -113,13 +128,13 @@ def generar_respuesta(sender_id, texto):
 
         respuesta += (
             "👉 ¿Cuál te interesa más?\n"
-            "Puedo ayudarte con financiación, permutas o más fotos."
+            "Puedo ayudarte con financiación, permutas , más fotos si no puedes escribir asesor y te dirijo con uno para contestar todas tus dudas "
         )
 
         return respuesta
 
     # =========================
-    # 3. USUARIO EN CONVERSACION
+    # 4. USUARIO EN CONVERSACION
     # =========================
 
     if sender_id in usuarios:
@@ -127,6 +142,8 @@ def generar_respuesta(sender_id, texto):
         estado = usuarios[sender_id]["estado"]
 
         if estado == "esperando_interes":
+            
+           
 
             if es_financiacion(texto):
 
@@ -142,8 +159,10 @@ def generar_respuesta(sender_id, texto):
                     "Te enviamos más fotos enseguida 📸\n"
                     "También puedo derivarte con un asesor si querés ver más detalles."
                 )
+                
+    
             # =========================
-            # 4. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
+            # 5. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
             if parece_busqueda_auto(texto):
                 return (
@@ -157,7 +176,7 @@ def generar_respuesta(sender_id, texto):
     )
     
  # =========================
-    # 5. DEFAULT
+    # 6. DEFAULT
     # =========================
 
     return (
