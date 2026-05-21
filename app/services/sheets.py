@@ -1,21 +1,21 @@
 import pandas as pd
-import time
+import time # Para el cache 
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1fEmcM4fzV2TwmzyZVqF9yS2mxH305CarUKURpC4t1xo/export?format=csv"
 
-_cache_df = None
-_cache_time = 0
+_cache_df = None # aca se guarda la planilla
+_cache_time = 0 # aca se guarda cuando se descargo por ultima vez
 CACHE_SECONDS = 300  # 5 minutos busca en la panilla 
 
 
 def obtener_dataframe():
     global _cache_df, _cache_time
 
-    ahora = time.time()
-
-    if _cache_df is not None and ahora - _cache_time < CACHE_SECONDS:
+    ahora = time.time() 
+ 
+    if _cache_df is not None and ahora - _cache_time < CACHE_SECONDS: # comprueba que esta por debajo del tiempo 
         return _cache_df.copy()
 
-    df = pd.read_csv(SHEET_URL)
+    df = pd.read_csv(SHEET_URL) # Llega aca al vencer el cache 
     df.columns = df.columns.str.strip().str.lower()
 
     _cache_df = df
