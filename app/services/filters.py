@@ -3,14 +3,16 @@ import pandas as pd
 import unicodedata
 
 
+
 def normalizar_texto(texto):
     texto = str(texto).lower().strip()
     
     texto= unicodedata.normalize("NFD",texto)
-    texto= texto.encode("ascii" , "ignore").decode("utf-8")
+    texto= texto.encode("ascii" , "ignore").decode("utf-8") # El utf es para trabajar con las tildes del texto 
     
     return texto
-
+def limpiar_signos(texto):
+    return re.sub(r"[^a-z0-9\s]", " ", texto)
 
 def extraer_anio(texto):
     coincidencia = re.search(r"\b(19|20)\d{2}\b", texto)
@@ -25,17 +27,21 @@ def limpiar_precio(valor):
     if pd.isna(valor):
         return None
 
-    valor = str(valor)
-    valor = valor.replace("$", "")
+    valor = str(valor).strip()
+
+    valor = valor.replace("$", "").replace(" ", "")
+
+    # Si viene con decimales tipo 12.600.000,00
+    # cortamos antes de la coma
+    if "," in valor:
+        valor = valor.split(",")[0]
+
     valor = valor.replace(".", "")
-    valor = valor.replace(",", "")
-    valor = valor.strip()
 
     try:
         return int(valor)
     except ValueError:
         return None
-
 
 def extraer_precio_maximo(texto):
     texto = texto.lower()
@@ -55,6 +61,17 @@ def extraer_precio_maximo(texto):
 
     return numero
 
+def pide_economico(texto):
+    palabras = [
+        "economico",
+        "barato",
+        "barata",
+        "accesible",
+        "bajo precio",
+        "menor precio"
+    ]
+
+    return any(palabra in texto for palabra in palabras)
 
 def filtrar_autos(df, texto):
     texto = normalizar_texto(texto)
@@ -76,40 +93,54 @@ def filtrar_autos(df, texto):
             resultado["precio_num"].notna() &
             (resultado["precio_num"] <= precio_maximo)
         ]
-
+        
+    if pide_economico(texto) and "precio_lista" in resultado.columns:
+        resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
+        resultado = resultado[
+        resultado["precio_num"].notna()
+    ].sort_values("precio_num", ascending=True)
+        
     # Sacar números del texto para no buscar "2022" dos veces
     texto_sin_numeros = re.sub(r"\b(19|20)\d{2}\b", "", texto)
-    texto_sin_numeros = re.sub(r"\d+", "", texto_sin_numeros).strip()
+    texto_sin_numeros = re.sub(r"\d+", "", texto_sin_numeros)
+    texto_sin_numeros = limpiar_signos(texto_sin_numeros).strip()
 
     palabras = texto_sin_numeros.split()
 
-    palabras_ignoradas = [
-        "tenes",
-        "tenés",
-        "tienen",
-        "tienes",
-        "hay",
-        "busco",
-        "quiero",
-        "necesito",
-        "me",
-        "interesa",
-        "un",
-        "una",
-        "auto",
-        "vehiculo",
-        "vehículo",
-        "modelo",
-        "hasta",
-        "menos",
-        "de",
-        "millones",
-        "millon",
-        "caja",
-        "con",
-        "transmision",
-        "transmisiòn"
-    ]
+    palabras_ignoradas = [ #Donde van esas palabras entre lineas para disparar el filtro
+    "tenes",
+    "tienen",
+    "tienes",
+    "hay",
+    "busco",
+    "quiero",
+    "necesito",
+    "me",
+    "interesa",
+    "un",
+    "una",
+    "auto",
+    "vehiculo",
+    "modelo",
+    "hasta",
+    "menos",
+    "de",
+    "millones",
+    "millon",
+    "caja",
+    "con",
+    "transmision",
+
+    #palabras comerciales de precio
+    "economico",
+    "economica",
+    "barato",
+    "barata",
+    "accesible",
+    "bajo",
+    "precio",
+    "menor"
+]
 
     columnas_busqueda = [
         "marca",
@@ -124,7 +155,8 @@ def filtrar_autos(df, texto):
         palabra for palabra in palabras
         if palabra not in palabras_ignoradas
     ]
-
+    if not palabras_utiles:
+        return resultado
     for palabra in palabras_utiles:
         filtro_palabra = False
 
