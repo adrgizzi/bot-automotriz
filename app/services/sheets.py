@@ -15,7 +15,7 @@ def obtener_dataframe():
     if _cache_df is not None and ahora - _cache_time < CACHE_SECONDS: # comprueba que esta por debajo del tiempo 
         return _cache_df.copy()
 
-    df = pd.read_csv(SHEET_URL) # Llega aca al vencer el cache 
+    df = pd.read_csv(SHEET_URL)  # Si venció el cache, lee la planilla otra vez
     df.columns = df.columns.str.strip().str.lower()
 
     _cache_df = df

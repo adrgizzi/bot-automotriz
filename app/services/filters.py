@@ -1,9 +1,15 @@
 import re
 import pandas as pd
+import unicodedata
 
 
 def normalizar_texto(texto):
-    return str(texto).lower().strip()
+    texto = str(texto).lower().strip()
+    
+    texto= unicodedata.normalize("NFD",texto)
+    texto= texto.encode("ascii" , "ignore").decode("utf-8")
+    
+    return texto
 
 
 def extraer_anio(texto):
@@ -81,6 +87,7 @@ def filtrar_autos(df, texto):
         "tenes",
         "tenés",
         "tienen",
+        "tienes",
         "hay",
         "busco",
         "quiero",
@@ -97,7 +104,11 @@ def filtrar_autos(df, texto):
         "menos",
         "de",
         "millones",
-        "millon"
+        "millon",
+        "caja",
+        "con",
+        "transmision",
+        "transmisiòn"
     ]
 
     columnas_busqueda = [
@@ -119,9 +130,10 @@ def filtrar_autos(df, texto):
 
         for columna in columnas_busqueda:
             if columna in resultado.columns:
+                columnas_normalizada=resultado[columna].astype(str).apply(normalizar_texto)
                 filtro_palabra = (
                     filtro_palabra |
-                    resultado[columna].astype(str).str.lower().str.contains(palabra, na=False)
+                    columnas_normalizada.str.contains(palabra,na=False)
                 )
 
         resultado = resultado[filtro_palabra]
