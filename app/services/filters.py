@@ -143,6 +143,8 @@ def filtrar_autos(df, texto):
     "caja",
     "con",
     "transmision",
+    "buscando",
+    "tambien",
 
     #palabras comerciales de precio
     "economico",
