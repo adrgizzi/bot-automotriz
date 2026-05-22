@@ -26,7 +26,7 @@ def parece_busqueda_auto(texto):
         "auto",
         "vehiculo",
         "vehículo",
-        "modelo"
+        "modelo" , 
     ]
 
     return any(palabra in texto for palabra in palabras)
@@ -46,7 +46,6 @@ def es_asesor(texto):
     ]
 
     return any(palabra in texto for palabra in palabras)
-
 
 
 

@@ -16,14 +16,14 @@ from app.services.intents import (
     parece_busqueda_auto , #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
     es_asesor
 )
-
+from app.services.formatters import formatear_precio
 
 def generar_respuesta(sender_id, texto):
 
     texto = texto.lower().strip()
 
     # =========================
-    # 1. SALUDOS
+    # 1. SALUDO
     # =========================
 
     if es_saludo(texto):
@@ -33,7 +33,7 @@ def generar_respuesta(sender_id, texto):
             "¿Qué vehículo estás buscando?"
         )
 # =========================
-# 2. DERIVAR A ASESOR
+# 2. asesor directo
 # =========================
     print(f"Texto recibido para intención asesor: {texto}")
     print(f"Es asesor?: {es_asesor(texto)}")# debug temporales
@@ -61,7 +61,7 @@ def generar_respuesta(sender_id, texto):
         }
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
-
+        
         for _, auto in autos.iterrows():
 
             # =========================
@@ -75,25 +75,8 @@ def generar_respuesta(sender_id, texto):
             else:
                 anio_str = "N/D"
 
-            # =========================
-            # LIMPIAR PRECIO
-            # =========================
-
-            precio = auto["precio_lista"] # aca me busca el precio de lista 
-
-            if pd.notna(precio):
-                precio_num = int(
-                    str(precio)
-                    .replace("$", "")
-                    .replace(".", "")
-                    .replace(",", "")
-                    .strip()
-                )
-
-                precio = f"${precio_num:,}".replace(",", ".")
-            else:
-                precio = "Consultar"
-
+          
+            precio = formatear_precio(auto["precio_lista"])
             # =========================
             # LIMPIAR KM
             # =========================
@@ -159,19 +142,19 @@ def generar_respuesta(sender_id, texto):
                 return responder_fotos(modelo) #en esta parte  deriava inmediatamente a un asesor 
             
             # =========================
-            # 5. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
+            # 5. parece busqueda , pero no encontro nada .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
     if parece_busqueda_auto(texto):
-                return (
-                "No encontré ese vehículo disponible por ahora 😕.\n\n"
-                "Pero puedo ayudarte a buscar una alternativa similar dentro del stock.\n"
-                "Podés consultar por marca o modelo, por ejemplo:\n"
-                "▫️ Toyota\n"
-                "▫️ Fiat\n"
-                "▫️ Jeep\n"
-                "▫️ Cruce\n"
-                "▫️ Hilux\n"
-                "▫️ Raptor"
+        return (
+            "No encontré ese vehículo disponible por ahora 😕.\n\n"
+            "Pero puedo ayudarte a buscar una alternativa similar dentro del stock.\n"
+            "Podés consultar por marca o modelo, por ejemplo:\n"
+            "▫️ Toyota\n"
+            "▫️ Fiat\n"
+            "▫️ Jeep\n"
+            "▫️ Cruce\n"
+            "▫️ Hilux\n"
+            "▫️ Raptor"
     )
     
  # =========================
