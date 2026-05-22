@@ -36,13 +36,13 @@ def generar_respuesta(sender_id, texto):
 # 2. DERIVAR A ASESOR
 # =========================
     print(f"Texto recibido para intención asesor: {texto}")
-    print(f"Es asesor?: {es_asesor(texto)}")
+    print(f"Es asesor?: {es_asesor(texto)}")# debug temporales
     if es_asesor(texto):
 
         modelo = None
 
-    if sender_id in usuarios:
-        modelo = usuarios[sender_id].get("ultimo_modelo")
+        if sender_id in usuarios:
+            modelo = usuarios[sender_id].get("ultimo_modelo")
 
         return responder_derivacion_asesor(modelo)
     # =========================
@@ -161,7 +161,7 @@ def generar_respuesta(sender_id, texto):
             # =========================
             # 5. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
-            if parece_busqueda_auto(texto):
+    if parece_busqueda_auto(texto):
                 return (
                 "No encontré ese vehículo disponible por ahora 😕.\n\n"
                 "Pero puedo ayudarte a buscar una alternativa similar dentro del stock.\n"
