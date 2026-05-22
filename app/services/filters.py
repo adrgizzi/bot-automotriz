@@ -2,7 +2,20 @@ import re
 import pandas as pd
 import unicodedata
 
+def normalizar_palabra(palabra):  # con clave y valor . metemos la normalizacion de palabras
+    equivalencias = {
+        "automatico": "automatica",
+        "automatica": "automatica",
 
+        "manual": "manual",
+
+        "naftero": "nafta",
+        "naftera": "nafta",
+        "gasolero": "diesel",
+        "gasolera": "diesel",
+    }
+
+    return equivalencias.get(palabra, palabra)
 
 def normalizar_texto(texto):
     texto = str(texto).lower().strip()
@@ -152,7 +165,8 @@ def filtrar_autos(df, texto):
     ]
 
     palabras_utiles = [
-        palabra for palabra in palabras
+        normalizar_palabra(palabra)
+        for palabra in palabras
         if palabra not in palabras_ignoradas
     ]
     if not palabras_utiles:
