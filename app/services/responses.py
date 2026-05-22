@@ -129,7 +129,7 @@ def generar_respuesta(sender_id, texto):
 
         respuesta += (
             "👉 ¿Cuál te interesa más?\n"
-            "Puedo ayudarte con financiación, permutas , más fotos si no puedes escribir asesor y te dirijo con uno para contestar todas tus dudas "
+            "Puedo ayudarte con financiación, permutas , más fotos si no puedes escribir la palabra : asesor y te dirijo con uno para contestar todas tus dudas"
         )
 
         return respuesta
@@ -156,7 +156,7 @@ def generar_respuesta(sender_id, texto):
             elif es_fotos(texto):
 
                 modelo = usuarios[sender_id].get("ultimo_modelo")
-                return responder_fotos(modelo) #aca deriava inmediatamente a un asesor 
+                return responder_fotos(modelo) #en esta parte  deriava inmediatamente a un asesor 
             
             # =========================
             # 5. parece busqueda .  # Esto es lo que genera una intencion de compra mas adelante 
@@ -169,7 +169,9 @@ def generar_respuesta(sender_id, texto):
                 "▫️ Toyota\n"
                 "▫️ Fiat\n"
                 "▫️ Jeep\n"
-                "▫️ Chevrolet"
+                "▫️ Cruce\n"
+                "▫️ Hilux\n"
+                "▫️ Raptor"
     )
     
  # =========================

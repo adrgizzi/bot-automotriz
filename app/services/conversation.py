@@ -3,7 +3,7 @@ def responder_financiacion():
         "💳 Trabajamos con opciones de financiación sujetas a aprobación.\n\n"
         "El monto de cuotas y anticipo depende del vehículo y del perfil crediticio.\n\n"
         "Si querés, puedo derivarte con un asesor para evaluar las opciones disponibles.\n"
-        "Escribí: asesor"
+        "Escribí: Asesor"
     )
 
 
@@ -12,13 +12,13 @@ def responder_permuta():
         "🚘 Tomamos vehículos en parte de pago.\n\n"
         "La cotización depende del modelo, año, kilometraje y estado general del vehículo.\n\n"
         "Si querés, puedo derivarte con un asesor para evaluar tu unidad.\n"
-        "Escribí: asesor"
+        "Escribí: Asesor"
     )
 
 def responder_derivacion_asesor(modelo=None):
     numero_whatsapp = "5493512201289"  # reemplazar por el número real
 
-    mensaje = "Hola, vengo desde el bot de Zabaleo Motors"
+    mensaje = "Hola, Vengo desde el bot de Zabaleo Motors "
 
     if modelo:
         mensaje += f" y estoy consultando por {modelo}"
@@ -35,7 +35,7 @@ def responder_derivacion_asesor(modelo=None):
 def responder_fotos(modelo=None):
     numero_whatsapp = "5493512201289"  # Numero real , No enviar a ningun otro lugar 
 
-    mensaje = "Hola, vengo desde el bot de Zabaleo Motors y quiero ver fotos"
+    mensaje = "Hola, vengo desde el bot de Zabaleo Motors y quiero ver mas fotos"
 
     if modelo:
         mensaje += f" de {modelo}"
