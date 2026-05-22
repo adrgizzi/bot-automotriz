@@ -1,11 +1,11 @@
 import pandas as pd
 import time # Para el cache 
+from app.services.filters import filtrar_autos #filtro de auto
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1fEmcM4fzV2TwmzyZVqF9yS2mxH305CarUKURpC4t1xo/export?format=csv"
 
 _cache_df = None # aca se guarda la planilla
 _cache_time = 0 # aca se guarda cuando se descargo por ultima vez
-CACHE_SECONDS = 300  # 5 minutos busca en la panilla 
-
+CACHE_SECONDS = 300  # 5 minutos de cache antes de volver a leer la planilla 
 
 def obtener_dataframe():
     global _cache_df, _cache_time
@@ -29,12 +29,9 @@ def buscar_autos(texto):
 
     df = obtener_dataframe()
 
-    marca_lower = df["marca"].astype(str).str.lower().str.strip()
-    modelo_lower = df["modelo"].astype(str).str.lower().str.strip()
+    return filtrar_autos(df, texto)
+#Lista de prioridades :
 
-    resultado = df[
-        marca_lower.str.contains(texto, na=False) |
-        modelo_lower.str.contains(texto, na=False)
-    ]
-
-    return resultado
+#sheets.py = obtiene datos
+#filters.py = decide qué autos coinciden
+#responses.py = arma la respuesta para el cliente
