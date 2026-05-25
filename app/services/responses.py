@@ -14,7 +14,8 @@ from app.services.intents import (
     es_permuta,
     es_fotos,
     parece_busqueda_auto , #esto va a limpiarme el codigo porque esta hoja sera solo para que tenga las ordenes pero la intencion procesa palabras de todo tipo 
-    es_asesor
+    es_asesor,
+    es_compra
 )
 from app.services.formatters import formatear_precio
 
@@ -45,8 +46,22 @@ def generar_respuesta(sender_id, texto):
             modelo = usuarios[sender_id].get("ultimo_modelo")
 
         return responder_derivacion_asesor(modelo)
+    
+    
+# =========================
+# 3. INTENCION DE COMPRA
+# =========================
+
+    if es_compra(texto):
+
+        modelo = None
+
+        if sender_id in usuarios:
+            modelo = usuarios[sender_id].get("ultimo_modelo")
+
+        return responder_derivacion_asesor(modelo)
     # =========================
-    # 3. BUSCAR AUTOS
+    # 4. BUSCAR AUTOS
     # =========================
 
     autos = buscar_autos(texto)
@@ -57,7 +72,8 @@ def generar_respuesta(sender_id, texto):
 
         usuarios[sender_id] = {
             "ultimo_modelo": texto,
-            "estado": "esperando_interes"
+            "estado": "esperando_interes",
+            "autos mostrados" : autos.to_dict("records")
         }
 
         respuesta = "Encontré estos vehículos 🚗\n\n"
@@ -118,7 +134,7 @@ def generar_respuesta(sender_id, texto):
         return respuesta
 
     # =========================
-    # 4. USUARIO EN CONVERSACION
+    # 5. USUARIO EN CONVERSACION
     # =========================
 
     if sender_id in usuarios:
@@ -142,7 +158,7 @@ def generar_respuesta(sender_id, texto):
                 return responder_fotos(modelo) #en esta parte  deriava inmediatamente a un asesor 
             
             # =========================
-            # 5. parece busqueda , pero no encontro nada .  # Esto es lo que genera una intencion de compra mas adelante 
+            # 6. parece busqueda , pero no encontro nada .  # Esto es lo que genera una intencion de compra mas adelante 
             # =========================
     if parece_busqueda_auto(texto):
         return (
@@ -158,7 +174,7 @@ def generar_respuesta(sender_id, texto):
     )
     
  # =========================
-    # 6. DEFAULT
+    # 7. DEFAULT
     # =========================
 
     return (
@@ -169,3 +185,12 @@ def generar_respuesta(sender_id, texto):
 #saludos
 #intenciones
 #conversación
+
+#"""El orden : 
+#1. Saludo
+#2. Asesor directo
+#3. Compra / avance / reserva
+#4. Buscar autos
+#5. Conversación activa
+#6. No encontrado
+#7. Default"""

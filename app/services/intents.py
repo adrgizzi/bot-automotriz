@@ -47,7 +47,24 @@ def es_asesor(texto):
 
     return any(palabra in texto for palabra in palabras)
 
+def es_compra(texto):
+    palabras = [
+        "quiero comprar",
+        "comprar",
+        "me interesa comprar",
+        "quiero avanzar",
+        "quiero señar",
+        "señar",
+        "reservar",
+        "lo quiero",
+        "me lo llevo",
+        "quiero verlo",
+        "quiero coordinar",
+        "cerrar",
+        "avanzar"
+    ]
 
+    return any(palabra in texto for palabra in palabras)
 
 
 #desde aca procesamos todas las palabras raras dentro del sistema lo que sea que no este del todo bien esto lo puede tomar como una intencion de respuesta o de "compra". la idea es siempre mantener el dialogo 
