@@ -17,16 +17,31 @@ def parece_busqueda_auto(texto):
     palabras = [
         "tenes",
         "tenés",
+        "tienes",
         "tienen",
         "hay",
         "busco",
         "quiero",
         "necesito",
-        "interesa",
+        "me interesa",
+        "mostrar",
+        "mostrame",
+        "mostrarme",
+        "muestrame",
+        "ver",
+        "pasame",
         "auto",
+        "autos",
         "vehiculo",
         "vehículo",
-        "modelo" , 
+        "vehiculos",
+        "modelo",
+        "marca",
+        "barato",
+        "economico",
+        "económico",
+        "hasta",
+        "desde"
     ]
 
     return any(palabra in texto for palabra in palabras)
