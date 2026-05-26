@@ -66,18 +66,24 @@ def generar_respuesta(sender_id, texto):
             usuarios[sender_id]["estado"]="lead_completo"
         
             nombre = usuarios[sender_id].get("nombre")
-            modelo=usuarios[sender_id].get("ultimo_modelo")
+            modelo = usuarios[sender_id].get("ultimo_modelo")
             telefono = usuarios[sender_id].get("telefono")
-            interes = usuarios [sender_id].get("interes")
+            interes = usuarios[sender_id].get("interes")
         
-            return ("Perfecto , Ya tengo tus datos ✅ \n\n"
+            return (
+                "Perfecto , Ya tengo tus datos ✅ \n\n"
                 f"Nombre : {nombre}\n"
                 f"Telefono : {telefono}\n"
                 f"Interès : {interes}\n"
                 f"Consulta : {modelo}\n\n"
                 "Ahora te derivo con yn asesosr para continuar.😁 \n"
-                + responder_derivacion_asesor(modelo)
+                + responder_derivacion_asesor(
+                    modelo=modelo,
+                    nombre =nombre,
+                    telefono = telefono,
+                    interes = interes 
                 )
+            )
     # =========================
     # 2. SALUDO
     # =========================
@@ -85,8 +91,8 @@ def generar_respuesta(sender_id, texto):
     if es_saludo(texto):
 
         return (
-            "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
-            "¿Qué vehículo estás buscando?"
+            "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n "
+            "¿Qué vehículo estás buscando? "
         )
     
         

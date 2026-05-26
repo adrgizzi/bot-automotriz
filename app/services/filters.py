@@ -55,6 +55,23 @@ def limpiar_precio(valor):
         return int(valor)
     except ValueError:
         return None
+def extraer_precio_minimo(texto):
+    texto = normalizar_texto(texto)
+
+    if "desde" not in texto and "a partir de" not in texto:
+        return None
+
+    numeros = re.findall(r"\d+", texto)
+
+    if not numeros:
+        return None
+
+    numero = int(numeros[0])
+
+    if "millon" in texto or "millones" in texto:
+        numero *= 1_000_000
+
+    return numero
 
 def extraer_precio_maximo(texto):
     texto = normalizar_texto(texto)
@@ -113,10 +130,10 @@ def pide_economico(texto):
 def filtrar_autos(df, texto):
     texto = normalizar_texto(texto)
     resultado = df.copy()
-
+   
     anio = extraer_anio(texto)
     precio_maximo = extraer_precio_maximo(texto)
-
+    precio_minimo = extraer_precio_minimo(texto)
     # FILTRO POR AÑO
      # FILTRO POR AÑO
     if anio and "año" in resultado.columns:
@@ -133,7 +150,13 @@ def filtrar_autos(df, texto):
             resultado["precio_num"].notna() &
             (resultado["precio_num"] <= precio_maximo)
         ]
-        
+    if precio_minimo and "precio_lista" in resultado.columns:
+        resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
+        resultado = resultado[
+        resultado["precio_num"].notna() &
+        (resultado["precio_num"] >= precio_minimo)
+    ]
+    
     if pide_economico(texto) and "precio_lista" in resultado.columns:
         resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
         resultado = resultado[
@@ -179,6 +202,14 @@ def filtrar_autos(df, texto):
     "vehiculos",
     "modelo",
     "modelos",
+    "desde",
+    "algo",
+    "alguno",
+    "alguna",
+    "opcion",
+    "opción",
+    "opciones",
+    "teniendo",
 
     #palabras comerciales de precio
     "economico",
@@ -261,3 +292,4 @@ def filtrar_autos(df, texto):
         resultado = resultado[filtro_palabra]
 
     return resultado
+

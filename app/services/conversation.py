@@ -15,16 +15,30 @@ def responder_permuta():
         "Escribí: Asesor"
     )
 
-def responder_derivacion_asesor(modelo=None):
+def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , interes=None):
     numero_whatsapp = "5493512201289"  # reemplazar por el número real
 
     mensaje = "Hola, Vengo desde el bot de Zabaleo Motors "
 
+    if nombre:
+        mensaje += f"\nNombre: {nombre}"
+
+        
+    if telefono:
+        mensaje += f"\Telefono: {telefono}🚗"
+   
+    if interes:
+        mensaje += f"\Interès: {interes}🚗"
+    
     if modelo:
-        mensaje += f" y estoy consultando por {modelo}"
+        mensaje += f"\Consulta: {modelo}🚗"
+            
 
-    mensaje_url = mensaje.replace(" ", "%20")
-
+    mensaje_url = (
+        mensaje
+        .replace(" ", "%20")
+        .replace("\n" ,"%0A") # saltos de linea en el mensaje 
+    )
     return (
         "Perfecto 😊\n"
         "Te puedo derivar con un asesor para continuar la consulta.\n\n"
