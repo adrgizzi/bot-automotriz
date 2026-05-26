@@ -94,10 +94,13 @@ def filtrar_autos(df, texto):
     precio_maximo = extraer_precio_maximo(texto)
 
     # FILTRO POR AÑO
+     # FILTRO POR AÑO
     if anio and "año" in resultado.columns:
+        resultado["anio_num"] = pd.to_numeric(resultado["año"], errors="coerce")
+
         resultado = resultado[
-            resultado["año"].astype(str).str.contains(str(anio), na=False)
-        ]
+            resultado["anio_num"] == anio
+    ]
 
     # FILTRO POR PRECIO MÁXIMO
     if precio_maximo and "precio_lista" in resultado.columns:
