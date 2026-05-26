@@ -27,10 +27,10 @@ def generar_respuesta(sender_id, texto):
         if sender_id in usuarios:
             del usuarios[sender_id]
 
-    return (
-        "Listo, reinicié la conversación 🔄\n"
-        "Podés buscar por marca, modelo, año, precio, color, combustible o transmisión."
-    )
+        return (
+            "Listo, reinicié la conversación 🔄\n"
+            "Podés buscar por marca, modelo, año, precio, color, combustible o transmisión."
+         )
     # =========================
     # 1. SALUDO
     # =========================
