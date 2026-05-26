@@ -23,13 +23,15 @@ def obtener_dataframe():
 
     return df.copy()
 
-
 def buscar_autos(texto):
     texto = texto.lower().strip()
 
     df = obtener_dataframe()
 
     return filtrar_autos(df, texto)
+
+def obtener_autos():
+    return obtener_dataframe()
 #Lista de prioridades :
 
 #sheets.py = obtiene datos

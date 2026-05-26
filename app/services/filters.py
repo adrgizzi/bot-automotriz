@@ -57,9 +57,19 @@ def limpiar_precio(valor):
         return None
 
 def extraer_precio_maximo(texto):
-    texto = texto.lower()
+    texto = normalizar_texto(texto)
 
-    if "hasta" not in texto and "menos de" not in texto:
+    palabras_presupuesto = [
+        "hasta",
+        "menos de",
+        "tengo",
+        "cuento con",
+        "dispongo de",
+        "presupuesto",
+        "mi presupuesto es"
+    ]
+
+    if not any(palabra in texto for palabra in palabras_presupuesto):
         return None
 
     numeros = re.findall(r"\d+", texto)
@@ -73,6 +83,20 @@ def extraer_precio_maximo(texto):
         numero *= 1_000_000
 
     return numero
+def es_consulta_presupuesto(texto):
+    texto = normalizar_texto(texto)
+
+    palabras = [
+        "tengo",
+        "cuento con",
+        "dispongo de",
+        "presupuesto",
+        "mi presupuesto",
+        "hasta",
+        "menos de"
+    ]
+
+    return any(palabra in texto for palabra in palabras)
 
 def pide_economico(texto):
     palabras = [
