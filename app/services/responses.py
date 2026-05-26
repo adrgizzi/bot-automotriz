@@ -1,4 +1,3 @@
-import pandas as pd
 
 from app.services.sheets import buscar_autos, obtener_autos
 from app.services.memory import usuarios

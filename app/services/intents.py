@@ -41,7 +41,8 @@ def parece_busqueda_auto(texto):
         "economico",
         "económico",
         "hasta",
-        "desde"
+        "desde",
+        "algo"
     ]
 
     return any(palabra in texto for palabra in palabras)
