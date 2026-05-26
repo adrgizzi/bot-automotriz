@@ -1,3 +1,5 @@
+from urllib.parse import quote # convierte todo en url
+
 def responder_financiacion():
     return (
         "💳 Trabajamos con opciones de financiación sujetas a aprobación.\n\n"
@@ -16,6 +18,7 @@ def responder_permuta():
     )
 
 def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , interes=None):
+    
     numero_whatsapp = "5493512201289"  # reemplazar por el número real
 
     mensaje = "Hola, Vengo desde el bot de Zabaleo Motors "
@@ -34,11 +37,7 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
         mensaje += f"\Consulta: {modelo}🚗"
             
 
-    mensaje_url = (
-        mensaje
-        .replace(" ", "%20")
-        .replace("\n" ,"%0A") # saltos de linea en el mensaje 
-    )
+    mensaje_url = quote(mensaje)
     return (
         "Perfecto 😊\n"
         "Te puedo derivar con un asesor para continuar la consulta.\n\n"
