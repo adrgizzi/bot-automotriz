@@ -44,9 +44,43 @@ def generar_respuesta(sender_id, texto):
             "Listo, reinicié la conversación 🔄\n"
             "Podés buscar por marca, modelo, año, precio, color, combustible o transmisión."
         )
-
+    
+     # =========================
+    # 1. Rrevisar si espera nombre o telefono
     # =========================
-    # 1. SALUDO
+    
+    if sender_id in usuarios:
+       
+        estado=usuarios[sender_id].get("estado")
+        
+        if estado == "esperando_nombre":
+            
+            usuarios[sender_id]["nombre"]=texto.title()
+            usuarios[sender_id]["estado"]="esperando_telefono"
+            
+            return (f"Gracias {usuarios[sender_id]['nombre']} 💪🏻\n"
+                    "¿Me pasàs tu telefono para que un asesor pueda contactarte?"
+                    )
+        
+        if estado =="esperando_telefono":
+            usuarios[sender_id]["telefono"]=texto
+            usuarios[sender_id]["estado"]="lead_completo"
+        
+            nombre = usuarios[sender_id].get("nombre")
+            modelo=usuarios[sender_id].get("ultimo_modelo")
+            telefono = usuarios[sender_id].get("telefono")
+            interes = usuarios [sender_id].get("interes")
+        
+            return ("Perfecto , Ya tengo tus datos ✅ \n\n"
+                f"Nombre : {nombre}\n"
+                f"Telefono : {telefono}\n"
+                f"Interès : {interes}\n"
+                f"Consulta : {modelo}\n\n"
+                "Ahora te derivo con yn asesosr para continuar.😁 \n"
+                + responder_derivacion_asesor(modelo)
+                )
+    # =========================
+    # 2. SALUDO
     # =========================
 
     if es_saludo(texto):
@@ -55,9 +89,10 @@ def generar_respuesta(sender_id, texto):
             "Hola 👋 Soy el asistente virtual de Zabaleo Motors 🚗\n"
             "¿Qué vehículo estás buscando?"
         )
-
+    
+        
     # =========================
-    # 2. ASESOR DIRECTO
+    # 3. ASESOR DIRECTO
     # =========================
 
     if es_asesor(texto):
@@ -70,7 +105,7 @@ def generar_respuesta(sender_id, texto):
         return responder_derivacion_asesor(modelo)
 
     # =========================
-    # 3. INTENCION DE COMPRA
+    # 4. INTENCION DE COMPRA
     # =========================
 
     if es_compra(texto):
@@ -79,11 +114,19 @@ def generar_respuesta(sender_id, texto):
 
         if sender_id in usuarios:
             modelo = usuarios[sender_id].get("ultimo_modelo")
-
-        return responder_derivacion_asesor(modelo)
+        usuarios[sender_id]={
+            "estado":"esperando_nombre",
+            "ultimo_modelo":modelo,
+            "interes":"compra",
+            "nombre":None,
+            "telefono":None,
+        }
+        return ("Perfecto 🤩 \n"
+                "Para derivarte con una asesor y avanazar mejor la consulta "
+                "¿Me decìs tu nombre?")
 
     # =========================
-    # 4. BUSCAR AUTOS
+    # 5. BUSCAR AUTOS
     # =========================
 
     autos = buscar_autos(texto)
@@ -93,7 +136,7 @@ def generar_respuesta(sender_id, texto):
     presupuesto = extraer_precio_maximo(texto)
 
     # =========================
-    # 4.1 PRESUPUESTO SIN RESULTADOS
+    # 5.1 PRESUPUESTO SIN RESULTADOS
     # =========================
 
     if presupuesto and len(autos) == 0:
@@ -134,7 +177,7 @@ def generar_respuesta(sender_id, texto):
             )
 
     # =========================
-    # 4.2 SI ENCONTRO AUTOS
+    # 5.2 SI ENCONTRO AUTOS
     # =========================
 
     if len(autos) > 0:
@@ -174,7 +217,7 @@ def generar_respuesta(sender_id, texto):
         return respuesta
 
     # =========================
-    # 5. USUARIO EN CONVERSACION
+    # 6. USUARIO EN CONVERSACION
     # =========================
 
     if sender_id in usuarios:
@@ -198,7 +241,7 @@ def generar_respuesta(sender_id, texto):
                 return responder_fotos(modelo)
 
     # =========================
-    # 6. PARECE BUSQUEDA PERO NO ENCONTRO NADA
+    # 7. PARECE BUSQUEDA PERO NO ENCONTRO NADA
     # =========================
 
     if parece_busqueda_auto(texto):
@@ -216,7 +259,7 @@ def generar_respuesta(sender_id, texto):
         )
 
     # =========================
-    # 7. DEFAULT
+    # 8. DEFAULT
     # =========================
 
     return (
@@ -229,10 +272,12 @@ def generar_respuesta(sender_id, texto):
 #conversación
 
 #"""El orden : 
-#1. Saludo
-#2. Asesor directo
-#3. Compra / avance / reserva
-#4. Buscar autos
-#5. Conversación activa
-#6. No encontrado
-#7. Default"""
+#0. reset
+#1. revisar si está esperando nombre o teléfono
+#2. saludo
+#3. asesor directo
+#4. intención de compra
+#5. buscar autos
+#6. conversación activa financiación / permuta / fotos
+#7. presupuesto / no encontrado
+#8. default
