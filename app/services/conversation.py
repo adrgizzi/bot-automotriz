@@ -28,16 +28,16 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
 
         
     if telefono:
-        mensaje += f"\Telefono: {telefono}🚗"
+        mensaje += f"\nTelefono: {telefono}"
    
     if interes:
-        mensaje += f"\Interès: {interes}🚗"
+        mensaje += f"\nInterès: {interes}"
     
     if modelo:
-        mensaje += f"\Consulta: {modelo}🚗"
+        mensaje += f"\nConsulta: {modelo}"
             
 
-    mensaje_url = quote(mensaje)
+    mensaje_url = quote(mensaje,safe="")
     return (
         "Perfecto 😊\n"
         "Te puedo derivar con un asesor para continuar la consulta.\n\n"
@@ -53,7 +53,7 @@ def responder_fotos(modelo=None):
     if modelo:
         mensaje += f" de {modelo}"
 
-    mensaje_url = mensaje.replace(" ", "%20")
+    mensaje_url = quote(mensaje , safe="")
 
     return (
         "Perfecto 📸\n"
