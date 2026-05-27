@@ -25,16 +25,15 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
 
     if nombre:
         mensaje += f"\nNombre: {nombre}"
-
         
     if telefono:
-        mensaje += f"\nTelefono: {telefono}"
+        mensaje += f"\nTelefono: {telefono}📱​"
    
     if interes:
-        mensaje += f"\nInterès: {interes}"
+        mensaje += f"\nInterès: {interes}​🧐​"
     
     if modelo:
-        mensaje += f"\nConsulta: {modelo}"
+        mensaje += f"\nConsulta: {modelo}🚘🔑​​"
             
 
     mensaje_url = quote(mensaje,safe="")
