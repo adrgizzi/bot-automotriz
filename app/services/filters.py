@@ -55,7 +55,8 @@ def limpiar_precio(valor):
         return int(valor)
     except ValueError:
         return None
-def extraer_precio_minimo(texto):
+
+def extraer_precio_minimo(texto): # filtro de desde 
     texto = normalizar_texto(texto)
 
     if "desde" not in texto and "a partir de" not in texto:
@@ -69,35 +70,29 @@ def extraer_precio_minimo(texto):
     numero = int(numeros[0])
 
     if "millon" in texto or "millones" in texto:
-        numero *= 1_000_000
+        numero = numero * 1_000_000
 
     return numero
 
 def extraer_precio_maximo(texto):
     texto = normalizar_texto(texto)
 
-    palabras_presupuesto = [
-        "hasta",
-        "menos de",
-        "tengo",
-        "cuento con",
-        "dispongo de",
-        "presupuesto",
-        "mi presupuesto es"
-    ]
-
-    if not any(palabra in texto for palabra in palabras_presupuesto):
-        return None
-
     numeros = re.findall(r"\d+", texto)
 
     if not numeros:
         return None
 
-    numero = int(numeros[0])
-
+    if "hasta" in texto:
+        numero=int(numeros[-1])
+    elif "menos de" in texto:
+        numero=int(numeros[0])
+    elif "tengo" in texto or "cuento con" in texto or "presupuesto" in texto:
+        numero = int(numeros[0])
+    else:
+        return None
+    
     if "millon" in texto or "millones" in texto:
-        numero *= 1_000_000
+        numero * 1_000_000
 
     return numero
 def es_consulta_presupuesto(texto):
@@ -172,7 +167,6 @@ def filtrar_autos(df, texto):
 
     palabras_ignoradas = [ #Donde van esas palabras entre lineas para disparar el filtro
     "tenes",
-    "tenes",
     "tienes",
     "tienen",
     "hay",
@@ -198,8 +192,11 @@ def filtrar_autos(df, texto):
     "por",
     "auto",
     "autos",
+    "autito",
     "vehiculo",
     "vehiculos",
+    "carro",
+    "carrito",
     "modelo",
     "modelos",
     "desde",
@@ -210,7 +207,24 @@ def filtrar_autos(df, texto):
     "opción",
     "opciones",
     "teniendo",
-
+    "algun",
+    "alguna",
+    "algunos",
+    "algunas",
+    "algo",
+    "ano",
+    "año",
+    "anios",
+    "años",
+    "valor",
+    "vale",
+    "valga",
+    "cueste",
+    "cuesta",
+    "tiene",
+    "tenes",
+    "tenés",
+    
     #palabras comerciales de precio
     "economico",
     "economica",
@@ -219,7 +233,7 @@ def filtrar_autos(df, texto):
     "accesible",
     "bajo",
     "precio",
-    "menor"
+    "menor",
     
     # verbos comunes de usuario
     "ver",
@@ -253,6 +267,11 @@ def filtrar_autos(df, texto):
     "bajo",
     "precio",
     "menor",
+    "valor",
+    "vale",
+    "valga",
+    "cueste",
+    "cuesta",
     
     # transmisión
     "caja",
