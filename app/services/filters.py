@@ -70,7 +70,7 @@ def extraer_precio_minimo(texto): # filtro de desde
     numero = int(numeros[0])
 
     if "millon" in texto or "millones" in texto:
-        numero = numero * 1_000_000
+        numero *= 1_000_000 # lleva un numero de 20 a millones 
 
     return numero
 
