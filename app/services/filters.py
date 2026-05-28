@@ -264,6 +264,7 @@ def filtrar_autos(df, texto):
     "azul",
     "rojo",
     "bordo",
+    "bordeau",
     "bordeaux",
     "beige",
     "verde",
