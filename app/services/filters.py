@@ -56,10 +56,10 @@ def limpiar_precio(valor):
     except ValueError:
         return None
 
-def extraer_precio_minimo(texto): # filtro de desde 
+def extraer_precio_minimo(texto):
     texto = normalizar_texto(texto)
 
-    if "desde" not in texto and "a partir de" not in texto:
+    if "desde" not in texto and "entre" not in texto and "a partir de" not in texto:
         return None
 
     numeros = re.findall(r"\d+", texto)
@@ -70,9 +70,10 @@ def extraer_precio_minimo(texto): # filtro de desde
     numero = int(numeros[0])
 
     if "millon" in texto or "millones" in texto:
-        numero *= 1_000_000 # lleva un numero de 20 a millones 
+        numero *= 1_000_000
 
     return numero
+
 
 def extraer_precio_maximo(texto):
     texto = normalizar_texto(texto)
@@ -82,19 +83,34 @@ def extraer_precio_maximo(texto):
     if not numeros:
         return None
 
-    if "hasta" in texto:
-        numero=int(numeros[-1])
+    # Caso: "desde 14 millones a 23 millones"
+    if "desde" in texto and len(numeros) >= 2:
+        numero = int(numeros[-1])
+
+    # Caso: "entre 14 y 23 millones"
+    elif "entre" in texto and len(numeros) >= 2:
+        numero = int(numeros[-1])
+
+    # Caso: "hasta 23 millones"
+    elif "hasta" in texto:
+        numero = int(numeros[-1])
+
+    # Caso: "menos de 23 millones"
     elif "menos de" in texto:
-        numero=int(numeros[0])
+        numero = int(numeros[0])
+
+    # Caso: "tengo 23 millones"
     elif "tengo" in texto or "cuento con" in texto or "presupuesto" in texto:
         numero = int(numeros[0])
+
     else:
         return None
-    
+
     if "millon" in texto or "millones" in texto:
-        numero * 1_000_000
+        numero *= 1_000_000
 
     return numero
+
 def es_consulta_presupuesto(texto):
     texto = normalizar_texto(texto)
 
@@ -127,8 +143,8 @@ def filtrar_autos(df, texto):
     resultado = df.copy()
    
     anio = extraer_anio(texto)
-    precio_maximo = extraer_precio_maximo(texto)
     precio_minimo = extraer_precio_minimo(texto)
+    precio_maximo = extraer_precio_maximo(texto)
     # FILTRO POR AÑO
     if anio and "año" in resultado.columns:
         resultado["anio_num"] = pd.to_numeric(resultado["año"], errors="coerce")
@@ -138,17 +154,19 @@ def filtrar_autos(df, texto):
     ]
 
     # FILTRO POR PRECIO MÁXIMO
-    if precio_maximo and "precio_lista" in resultado.columns:
-        resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
-        resultado = resultado[
-            resultado["precio_num"].notna() &
-            (resultado["precio_num"] <= precio_maximo)
-        ]
+    
     if precio_minimo and "precio_lista" in resultado.columns:
         resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
         resultado = resultado[
         resultado["precio_num"].notna() &
         (resultado["precio_num"] >= precio_minimo)
+    ]
+
+    if precio_maximo and "precio_lista" in resultado.columns:
+        resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
+        resultado = resultado[
+        resultado["precio_num"].notna() &
+        (resultado["precio_num"] <= precio_maximo)
     ]
     
     if pide_economico(texto) and "precio_lista" in resultado.columns:
