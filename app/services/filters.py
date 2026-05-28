@@ -158,17 +158,21 @@ def filtrar_autos(df, texto):
     if precio_minimo and "precio_lista" in resultado.columns:
         resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
         resultado = resultado[
-        resultado["precio_num"].notna() &
-        (resultado["precio_num"] >= precio_minimo)
+            resultado["precio_num"].notna() &
+            (resultado["precio_num"] >= precio_minimo)
     ]
-
+    if "precio_num" in resultado.columns:
+        resultado = resultado.sort_values("precio_num", ascending=True)
+        
     if precio_maximo and "precio_lista" in resultado.columns:
         resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
         resultado = resultado[
-        resultado["precio_num"].notna() &
-        (resultado["precio_num"] <= precio_maximo)
+            resultado["precio_num"].notna() &
+            (resultado["precio_num"] <= precio_maximo)
     ]
-    
+    if "precio_num" in resultado.columns:
+        resultado = resultado.sort_values("precio_num", ascending=True)
+        
     if pide_economico(texto) and "precio_lista" in resultado.columns:
         resultado["precio_num"] = resultado["precio_lista"].apply(limpiar_precio)
         resultado = resultado[
@@ -182,6 +186,7 @@ def filtrar_autos(df, texto):
     "azul",
     "rojo",
     "bordo",
+    "bordeau",
     "bordeaux",
     "beige",
     "verde",
@@ -194,16 +199,13 @@ def filtrar_autos(df, texto):
             if color in texto:
                 color_detectado = color
                 break
-
+            
     if color_detectado and "color" in resultado.columns:
         color_columna = resultado["color"].astype(str).apply(normalizar_texto)
 
         resultado = resultado[
             color_columna.str.contains(color_detectado, na=False)
     ]
-    
-    
-    
     
     
     # Sacar números del texto para no buscar "2022" dos veces
