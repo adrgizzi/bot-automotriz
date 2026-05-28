@@ -130,7 +130,6 @@ def filtrar_autos(df, texto):
     precio_maximo = extraer_precio_maximo(texto)
     precio_minimo = extraer_precio_minimo(texto)
     # FILTRO POR AÑO
-     # FILTRO POR AÑO
     if anio and "año" in resultado.columns:
         resultado["anio_num"] = pd.to_numeric(resultado["año"], errors="coerce")
 
@@ -157,7 +156,38 @@ def filtrar_autos(df, texto):
         resultado = resultado[
         resultado["precio_num"].notna()
     ].sort_values("precio_num", ascending=True)
-        
+    
+    colores = [
+    "blanco",
+    "negro",
+    "gris",
+    "azul",
+    "rojo",
+    "bordo",
+    "bordeaux",
+    "beige",
+    "verde",
+    "plata"
+]
+
+    color_detectado = None
+
+    for color in colores:
+            if color in texto:
+                color_detectado = color
+                break
+
+    if color_detectado and "color" in resultado.columns:
+        color_columna = resultado["color"].astype(str).apply(normalizar_texto)
+
+        resultado = resultado[
+            color_columna.str.contains(color_detectado, na=False)
+    ]
+    
+    
+    
+    
+    
     # Sacar números del texto para no buscar "2022" dos veces
     texto_sin_numeros = re.sub(r"\b(19|20)\d{2}\b", "", texto)
     texto_sin_numeros = re.sub(r"\d+", "", texto_sin_numeros)
@@ -165,17 +195,20 @@ def filtrar_autos(df, texto):
 
     palabras = texto_sin_numeros.split()
 
-    palabras_ignoradas = [ #Donde van esas palabras entre lineas para disparar el filtro
+    palabras_ignoradas = [  # filtro donde ingresan las palabras
     "tenes",
     "tienes",
     "tienen",
     "hay",
     "busco",
+    "buscando",
+    "estoy",
     "quiero",
     "necesito",
     "me",
     "interesa",
     "interesan",
+
     "un",
     "una",
     "unos",
@@ -190,6 +223,7 @@ def filtrar_autos(df, texto):
     "con",
     "para",
     "por",
+
     "auto",
     "autos",
     "autito",
@@ -199,62 +233,51 @@ def filtrar_autos(df, texto):
     "carrito",
     "modelo",
     "modelos",
-    "desde",
-    "algo",
-    "alguno",
-    "alguna",
-    "opcion",
-    "opción",
-    "opciones",
-    "teniendo",
+
+#Colores segunda edicion 
+    "color",
+    "colores",
+    "pintura",
+    "blanco",
+    "negro",
+    "gris",
+    "azul",
+    "rojo",
+    "bordo",
+    "bordeaux",
+    "beige",
+    "verde",
+    "plata",
+    "ano",
+    "anos",
+    "anios",
+
     "algun",
     "alguna",
     "algunos",
     "algunas",
     "algo",
-    "ano",
-    "año",
-    "anios",
-    "años",
-    "valor",
-    "vale",
-    "valga",
-    "cueste",
-    "cuesta",
-    "tiene",
-    "tenes",
-    "tenés",
-    
-    #palabras comerciales de precio
-    "economico",
-    "economica",
-    "barato",
-    "barata",
-    "accesible",
-    "bajo",
-    "precio",
-    "menor",
-    
-    # verbos comunes de usuario
+    "opcion",
+    "opciones",
+
     "ver",
     "mostrar",
     "mostrame",
     "mostrarme",
-    "muéstrame",
     "muestrame",
     "pasame",
     "pasar",
     "ofrecer",
     "ofreces",
 
-    # precio
     "hasta",
     "desde",
+    "entre",
     "menos",
     "mas",
-    "más",
     "millones",
     "millon",
+
     "economico",
     "economica",
     "economicos",
@@ -267,13 +290,7 @@ def filtrar_autos(df, texto):
     "bajo",
     "precio",
     "menor",
-    "valor",
-    "vale",
-    "valga",
-    "cueste",
-    "cuesta",
-    
-    # transmisión
+
     "caja",
     "transmision",
     "transmisiones",
