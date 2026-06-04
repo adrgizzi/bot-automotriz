@@ -1,13 +1,13 @@
 
 from app.services.sheets import buscar_autos, obtener_autos
 from app.services.memory import usuarios
-from app.services.conversation import (
+from app.services.conversation import (# esto permite responder todo y es la hoja donde habla con el cliente .
     responder_financiacion,
     responder_permuta,
     responder_derivacion_asesor,
     responder_fotos
 )
-from app.services.intents import (
+from app.services.intents import ( # principales interaciones programadas donde identifica que es lo que quiere ese usuario
     es_saludo,
     es_financiacion,
     es_permuta,
@@ -16,7 +16,7 @@ from app.services.intents import (
     es_asesor,
     es_compra
 )
-from app.services.formatters import (
+from app.services.formatters import ( # esto formatea todo los numeros o palabras para que sea todo mas suave al conversar 
     formatear_precio,
     formatear_anio,
     formatear_km,
@@ -25,6 +25,12 @@ from app.services.formatters import (
 )
 from app.services.filters import extraer_precio_maximo
 
+
+from app.services.leads import ( #esto fuarda toda la interaccion con el cliente 
+    guardar_cliente,
+    guardar_oportunidad,
+    #guardar_conversacion
+)
 
 def generar_respuesta(sender_id, texto):
 
@@ -69,7 +75,9 @@ def generar_respuesta(sender_id, texto):
             modelo = usuarios[sender_id].get("ultimo_modelo")
             telefono = usuarios[sender_id].get("telefono")
             interes = usuarios[sender_id].get("interes")
-        
+            guardar_cliente(sender_id, nombre, telefono)
+            guardar_oportunidad(sender_id, modelo, interes)
+            
             return (
                 "Perfecto , Ya tengo tus datos ✅ \n\n"
                 f"Nombre : {nombre}\n"
