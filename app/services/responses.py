@@ -28,8 +28,7 @@ from app.services.filters import extraer_precio_maximo
 
 from app.services.leads import ( #esto fuarda toda la interaccion con el cliente 
     guardar_cliente,
-    guardar_oportunidad,
-    #guardar_conversacion
+    guardar_oportunidad
 )
 
 def generar_respuesta(sender_id, texto):
@@ -75,9 +74,13 @@ def generar_respuesta(sender_id, texto):
             modelo = usuarios[sender_id].get("ultimo_modelo")
             telefono = usuarios[sender_id].get("telefono")
             interes = usuarios[sender_id].get("interes")
-            guardar_cliente(sender_id, nombre, telefono)
-            guardar_oportunidad(sender_id, modelo, interes)
-            
+            try:
+                guardar_cliente(sender_id, nombre, telefono)
+                guardar_oportunidad(sender_id, modelo, interes)
+                print("Lead guardado en PostgreSQL ✅")
+
+            except Exception as e:
+                print(f"Error guardando lead en PostgreSQL: {e}")
             return (
                 "Perfecto , Ya tengo tus datos ✅ \n\n"
                 f"Nombre : {nombre}\n"
