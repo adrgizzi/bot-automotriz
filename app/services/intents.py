@@ -43,7 +43,9 @@ def parece_busqueda_auto(texto):
         "hasta",
         "desde",
         "algo",
-        "algun"
+        "algun",
+        "quiero ver"
+        
     ]
 
     return any(palabra in texto for palabra in palabras)
@@ -78,7 +80,10 @@ def es_compra(texto):
         "quiero verlo",
         "quiero coordinar",
         "cerrar",
-        "avanzar"
+        "avanzar",
+        "quiero llevarme",
+        "ese mismo",
+        "me llevo"
     ]
 
     return any(palabra in texto for palabra in palabras)
