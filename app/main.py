@@ -5,6 +5,8 @@ import os
 import traceback
 from app.services.responses import generar_respuesta
 from app.services.messenger import send_message
+from app.services.leads import guardar_conversacion
+
 
 load_dotenv()
 
@@ -38,10 +40,17 @@ async def receive_message(request: Request):
         if "message" in messaging:
             user_message = messaging["message"].get("text", "")
             respuesta = generar_respuesta(sender_id, user_message)
+
+            try:
+                guardar_conversacion(sender_id, user_message, respuesta)
+                print("Conversación guardada en PostgreSQL ✅")
+            except Exception as e:
+                print(f"Error guardando conversación: {e}")
+
             send_message(sender_id, respuesta)
-    except Exception as e:
+    except Exception as e: 
         print("ERROR:")
-        traceback.print_exc()
+        traceback.PRINT_EXC()
     return {"status": "ok"}
 
 
