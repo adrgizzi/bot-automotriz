@@ -48,6 +48,7 @@ async def receive_message(request: Request):
                 print(f"Error guardando conversación: {e}")
 
             send_message(sender_id, respuesta)
+    
     except Exception as e: 
         print("ERROR:")
         traceback.PRINT_EXC()
