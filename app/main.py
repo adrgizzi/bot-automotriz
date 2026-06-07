@@ -51,7 +51,7 @@ async def receive_message(request: Request):
     
     except Exception as e: 
         print("ERROR:")
-        traceback.PRINT_EXC()
+        traceback.print_exc()
     return {"status": "ok"}
 
 
