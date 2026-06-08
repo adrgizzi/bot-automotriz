@@ -37,6 +37,15 @@ async def verify_webhook(request: Request):
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
 
+@app.get("/debug-env")
+async def debug_env():
+    return {
+        "verify_token_exists": bool(VERIFY_TOKEN),
+        "verify_token_length": len(VERIFY_TOKEN),
+        "database_url_exists": bool(os.getenv("DATABASE_URL")),
+        "page_token_exists": bool(os.getenv("PAGE_ACCESS_TOKEN")),
+    }
+    
 @app.post("/webhook")
 async def receive_message(request: Request):
     body = await request.json()
