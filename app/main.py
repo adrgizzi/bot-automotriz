@@ -10,7 +10,7 @@ from app.services.leads import guardar_conversacion
 
 load_dotenv()
 
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "").strip()
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "").strip() # strip sirve para dar espacio 
 
 app = FastAPI()
 
