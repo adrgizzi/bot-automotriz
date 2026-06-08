@@ -37,13 +37,13 @@ async def verify_webhook(request: Request):
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
 
-@app.get("/debug-env")
-async def debug_env():
+@app.get("/debug-token")
+async def debug_token():
+    token_raw = os.getenv("VERIFY_TOKEN", "NADA")
     return {
-        "verify_token_exists": bool(VERIFY_TOKEN),
-        "verify_token_length": len(VERIFY_TOKEN),
-        "database_url_exists": bool(os.getenv("DATABASE_URL")),
-        "page_token_exists": bool(os.getenv("PAGE_ACCESS_TOKEN")),
+        "token_guardado": token_raw,         # ver el valor exacto
+        "longitud": len(token_raw),
+        "bytes": list(token_raw.encode())    # ver si hay caracteres raros
     }
     
 @app.post("/webhook")
