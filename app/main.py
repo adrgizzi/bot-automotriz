@@ -28,7 +28,7 @@ async def verify_webhook(request: Request):
     print("VERIFY_TOKEN configurado:", bool(VERIFY_TOKEN))
     print("Largo VERIFY_TOKEN:", len(VERIFY_TOKEN))
     print("Largo token recibido:", len(hub_verify_token))
-
+    
     
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
         return PlainTextResponse(content=hub_challenge)
