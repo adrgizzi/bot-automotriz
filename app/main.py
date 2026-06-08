@@ -10,7 +10,7 @@ from app.services.leads import guardar_conversacion
 
 load_dotenv()
 
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "").strip()
 
 app = FastAPI()
 
@@ -22,8 +22,14 @@ async def home():
 async def verify_webhook(request: Request):
     params = request.query_params
     hub_mode = params.get("hub.mode")
-    hub_verify_token = params.get("hub.verify_token")
+    hub_verify_token = (params.get("hub.verify_token") or "").strip()
     hub_challenge = params.get("hub.challenge")
+    
+    print("VERIFY_TOKEN configurado:", bool(VERIFY_TOKEN))
+    print("Largo VERIFY_TOKEN:", len(VERIFY_TOKEN))
+    print("Largo token recibido:", len(hub_verify_token))
+
+    
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
