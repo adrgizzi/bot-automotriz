@@ -25,12 +25,15 @@ async def verify_webhook(request: Request):
     hub_verify_token = (params.get("hub.verify_token") or "").strip()
     hub_challenge = params.get("hub.challenge")
     
-    print("VERIFY_TOKEN configurado:", bool(VERIFY_TOKEN))
-    print("Largo VERIFY_TOKEN:", len(VERIFY_TOKEN))
+    verify_token_configurado = (VERIFY_TOKEN or "").strip()
+    
+    print("VERIFY_TOKEN existe:", bool(verify_token_configurado))
+    print("Largo VERIFY_TOKEN:", len(verify_token_configurado))
     print("Largo token recibido:", len(hub_verify_token))
+    print("Tokens coinciden:", hub_verify_token == verify_token_configurado)
+
     
-    
-    if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
+    if hub_mode == "subscribe" and hub_verify_token == verify_token_configurado:
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
 
