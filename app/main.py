@@ -36,15 +36,6 @@ async def verify_webhook(request: Request):
     if hub_mode == "subscribe" and hub_verify_token == verify_token_configurado:
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
-
-@app.get("/debug-token")
-async def debug_token():
-    token_raw = os.getenv("VERIFY_TOKEN", "NADA")
-    return {
-        "token_guardado": token_raw,         # ver el valor exacto
-        "longitud": len(token_raw),
-        "bytes": list(token_raw.encode())    # ver si hay caracteres raros
-    }
     
 @app.post("/webhook")
 async def receive_message(request: Request):
