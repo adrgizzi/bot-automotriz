@@ -8,7 +8,7 @@ _cache_time = 0 # aca se guarda cuando se descargo por ultima vez
 CACHE_SECONDS = 300  # 5 minutos de cache antes de volver a leer la planilla 
 
 def obtener_dataframe():
-    global _cache_df, _cache_time
+    global _cache_df, _cache_time #busqueda global 
 
     ahora = time.time() 
  
