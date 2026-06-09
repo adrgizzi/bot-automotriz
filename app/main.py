@@ -10,7 +10,7 @@ from app.services.leads import guardar_conversacion
 
 load_dotenv()
 
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "").strip() # strip sirve para dar espacio 
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "").strip() # strip sirve para eliminar espacio alprincio y al final  
 
 app = FastAPI()
 
@@ -41,7 +41,11 @@ async def verify_webhook(request: Request):
 async def receive_message(request: Request):
     body = await request.json()
     print("MENSAJE RECIBIDO:")
-    print(body)
+    print(body,flush=True)
+    
+    
+    
+    
     try:
         entry = body["entry"][0]
         messaging = entry["messaging"][0]
