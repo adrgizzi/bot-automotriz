@@ -36,26 +36,7 @@ async def verify_webhook(request: Request):
     if hub_mode == "subscribe" and hub_verify_token == verify_token_configurado:
         return PlainTextResponse(content=hub_challenge)
     return {"error": "Token inválido"}
-@app.get("/debug-db")
-async def debug_db():
-    try:
-        guardar_conversacion(
-            "debug_railway",
-            "prueba directa desde railway",
-            "ok"
-        )
 
-        return {
-            "ok": True,
-            "database_url_exists": bool(os.getenv("DATABASE_URL"))
-        }
-
-    except Exception as e:
-        return {
-            "ok": False,
-            "database_url_exists": bool(os.getenv("DATABASE_URL")),
-            "error": str(e)
-        }   
 @app.post("/webhook")
 async def receive_message(request: Request):
     body = await request.json()
