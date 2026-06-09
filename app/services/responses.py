@@ -123,24 +123,34 @@ def generar_respuesta(sender_id, texto):
     # =========================
     # 4. INTENCION DE COMPRA
     # =========================
-
     if es_compra(texto):
-
         modelo = None
+        auto_seleccionado = None
 
-        if sender_id in usuarios:
+    if sender_id in usuarios:
+        auto_seleccionado = usuarios[sender_id].get("auto_seleccionado")
+
+        if auto_seleccionado:
+            modelo = f"{auto_seleccionado.get('marca', '')} {auto_seleccionado.get('modelo', '')}".strip()
+        else:
             modelo = usuarios[sender_id].get("ultimo_modelo")
-        usuarios[sender_id]={
-            "estado":"esperando_nombre",
-            "ultimo_modelo":modelo,
-            "interes":"compra",
-            "nombre":None,
-            "telefono":None,
-        }
-        return ("Perfecto 🤩 \n"
-                "Para derivarte con una asesor y avanazar mejor la consulta "
-                "¿Me decìs tu nombre?")
 
+    if not modelo:
+        modelo = texto
+
+    usuarios[sender_id] = {
+        "estado": "esperando_nombre",
+        "ultimo_modelo": modelo,
+        "interes": "compra",
+        "nombre": None,
+        "telefono": None,
+    }
+
+    return (
+        "Perfecto 🤩\n"
+        "Para derivarte con un asesor y avanzar mejor la consulta, ¿me decís tu nombre?"
+    )
+    
     # =========================
     # 5. BUSCAR AUTOS
     # =========================
