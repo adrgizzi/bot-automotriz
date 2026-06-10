@@ -63,7 +63,7 @@ def generar_respuesta(sender_id, texto):
             usuarios[sender_id]["estado"]="esperando_telefono"
             
             return (f"Gracias {usuarios[sender_id]['nombre']} 💪🏻\n"
-                    "¿Me pasàs tu telefono para que un asesor pueda contactarte?"
+                    "¿Me pasás tu numero de telefono para que un asesor pueda contactarte?"
                     )
         
         if estado =="esperando_telefono":
@@ -84,10 +84,10 @@ def generar_respuesta(sender_id, texto):
             return (
                 "Perfecto , Ya tengo tus datos ✅ \n\n"
                 f"Nombre : {nombre}\n"
-                f"Telefono : {telefono}\n"
-                f"Interès : {interes}\n"
+                f"Teléfono : {telefono}\n"
+                f"Interés : {interes}\n"
                 f"Consulta : {modelo}\n\n"
-                "Ahora te derivo con yn asesosr para continuar.😁 \n"
+                "Ahora te derivo con un asesosr para continuar.😁 \n"
                 + responder_derivacion_asesor(
                     modelo=modelo,
                     nombre =nombre,
@@ -148,7 +148,8 @@ def generar_respuesta(sender_id, texto):
 
         return (
             "Perfecto 🤩\n"
-            "Para derivarte con un asesor y avanzar mejor la consulta, ¿me decís tu nombre?"
+            "Para derivarte con un asesor y avanzar mejor la consulta,"
+            "¿me decís tu nombre?"
         )
     
     # =========================

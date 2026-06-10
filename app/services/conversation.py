@@ -21,25 +21,29 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
     
     numero_whatsapp = "5493512201289"  # reemplazar por el número real
 
-    mensaje = "Hola, Vengo desde el bot de Zabaleo Motors "
+    mensaje_whatsapp = "Hola, Vengo desde el bot de Zabaleo Motors "
 
     if nombre:
-        mensaje += f"\nNombre: {nombre}"
+        mensaje_whatsapp += f"\nNombre: {nombre}"
         
     if telefono:
-        mensaje += f"\nTelefono: {telefono}📱​"
+        mensaje_whatsapp += f"\nTelefono: {telefono}📱​"
    
     if interes:
-        mensaje += f"\nInterès: {interes}​🧐​"
+        mensaje_whatsapp += f"\nInterès: {interes}​🧐​"
     
     if modelo:
-        mensaje += f"\nConsulta: {modelo}🚘🔑​​"
+        mensaje_whatsapp += f"\nConsulta: {modelo}🚘🔑​​"
             
 
-    mensaje_url = quote(mensaje,safe="")
+    mensaje_url = quote(mensaje_whatsapp,safe="")
     return (
-        "Perfecto 😊\n"
-        "Te puedo derivar con un asesor para continuar la consulta.\n\n"
+        "Perfecto , ya tengo tus datos ✅\n\n"
+        f"Nombre:{nombre or 'No informado'}\n"
+        f"Telefono:{telefono or 'No informado'}\n"
+        f"Interes:{interes or 'No informado'}\n"
+        f"Consulta:{modelo or 'No informado'}\n\n"
+        "Ahora te derivo con un asesor para continuar la consulta.\n\n"
         f"📲 Escribinos por WhatsApp acá:\n"
         f"https://wa.me/{numero_whatsapp}?text={mensaje_url}"
     )
