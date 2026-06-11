@@ -81,20 +81,13 @@ def generar_respuesta(sender_id, texto):
 
             except Exception as e:
                 print(f"Error guardando lead en PostgreSQL: {e}")
-            return (
-                "Perfecto , Ya tengo tus datos ✅ \n\n"
-                f"Nombre : {nombre}\n"
-                f"Teléfono : {telefono}\n"
-                f"Interés : {interes}\n"
-                f"Consulta : {modelo}\n\n"
-                "Ahora te derivo con un asesosr para continuar.😁 \n"
-                + responder_derivacion_asesor(
+            return responder_derivacion_asesor(
                     modelo=modelo,
                     nombre =nombre,
                     telefono = telefono,
                     interes = interes 
                 )
-            )
+            
     # =========================
     # 2. SALUDO
     # =========================
