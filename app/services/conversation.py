@@ -30,7 +30,7 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
         mensaje_whatsapp += f"\nTelefono: {telefono}📱​"
    
     if interes:
-        mensaje_whatsapp += f"\nInterès: {interes}​🧐​"
+        mensaje_whatsapp += f"\nInterés: {interes}​🧐​"
     
     if modelo:
         mensaje_whatsapp += f"\nConsulta: {modelo}🚘🔑​​"
