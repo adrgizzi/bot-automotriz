@@ -83,7 +83,10 @@ def es_compra(texto):
         "avanzar",
         "quiero llevarme",
         "ese mismo",
-        "me llevo"
+        "me llevo",
+        "esa misma",
+        "la quiero",
+        "esa"
     ]
 
     return any(palabra in texto for palabra in palabras)
