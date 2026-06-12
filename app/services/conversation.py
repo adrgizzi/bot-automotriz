@@ -27,13 +27,13 @@ def responder_derivacion_asesor(modelo=None , nombre=None , telefono=None , inte
         mensaje_whatsapp += f"\nNombre: {nombre}"
         
     if telefono:
-        mensaje_whatsapp += f"\nTelefono: {telefono}📱​"
+        mensaje_whatsapp += f"\nTelefono: {telefono}​"
    
     if interes:
-        mensaje_whatsapp += f"\nInterés: {interes}​🧐​"
+        mensaje_whatsapp += f"\nInterés: {interes}​​"
     
     if modelo:
-        mensaje_whatsapp += f"\nConsulta: {modelo}🚘🔑​​"
+        mensaje_whatsapp += f"\nConsulta: {modelo}​"
             
 
     mensaje_url = quote(mensaje_whatsapp,safe="")
