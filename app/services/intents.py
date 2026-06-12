@@ -1,54 +1,151 @@
+from app.services.filters import normalizar_texto
+
+def contiene_alguna(texto,palabras):
+    texto=normalizar_texto(texto)
+    return any (palabra in texto for palabra in palabras)
+
+
 def es_financiacion(texto):
-    return "financi" in texto or "cuota" in texto or "credito" in texto or "crédito" in texto
-
-
-def es_permuta(texto):
-    return "permuta" in texto or "entrego" in texto or "parte de pago" in texto
-
-
-def es_fotos(texto):
-    return "foto" in texto or "fotos" in texto or "imagen" in texto
-
-
-def es_saludo(texto):
-    return "hola" in texto or "buenas" in texto
-
-def parece_busqueda_auto(texto):
-    palabras = [
-        "tenes",
-        "tenés",
-        "tienes",
-        "tienen",
-        "hay",
-        "busco",
-        "quiero",
-        "necesito",
-        "me interesa",
-        "mostrar",
-        "mostrame",
-        "mostrarme",
-        "muestrame",
-        "ver",
-        "pasame",
-        "auto",
-        "autos",
-        "vehiculo",
-        "vehículo",
-        "vehiculos",
-        "modelo",
-        "marca",
-        "barato",
-        "economico",
-        "económico",
-        "hasta",
-        "desde",
-        "algo",
-        "algun",
-        "quiero ver"
-        
+    
+    palabras=["financiacion",
+        "financiar",
+        "financiado",
+        "financiada",
+        "cuota",
+        "cuotas",
+        "credito",
+        "prestamo",
+        "anticipo",
+        "entrega",
+        "plan de pago",
+        "se puede pagar en cuotas",
     ]
 
-    return any(palabra in texto for palabra in palabras)
+
+    return contiene_alguna(texto,palabras)
+
+def es_permuta(texto):
+    
+    
+    palabras = [
+        "permuta",
+        "permuto",
+        "entrego",
+        "entregar mi auto",
+        "parte de pago",
+        "toman usado",
+        "tomas usado",
+        "reciben usado",
+        "recibis usado",
+        "mi auto como parte",
+    ]
+    
+    return contiene_alguna(texto,palabras)
+
+def es_fotos(texto):
+    palabras = [
+        "foto",
+        "fotos",
+        "imagen",
+        "imagenes",
+        "ver fotos",
+        "pasame fotos",
+        "mostrar fotos",
+        "quiero ver fotos",
+        "tenes foto",
+        "tenes fotos",
+        "tenes imagen",
+        "tenes imagenes",
+        "mandame fotos",
+        "mandame imagenes",
+        "me pasas fotos",
+        "me pasas imagenes",
+        "quiero fotos",
+    ]
+
+    return contiene_alguna(texto, palabras)
+
+def es_saludo(texto):
+    texto=normalizar_texto(texto).strip()
+    saludos=[
+        "hola",
+        "buenas",
+        "buen dia",
+        "buenas tardes",
+        "buenas noches",
+        "que tal",
+        "como estas",
+    ]
+    return texto in saludos or any (texto.startswith(saludo)for saludo in saludos)
+    
+def parece_busqueda_auto(texto):
+    palabras = [
+           "tenes",
+           "tenes",
+           "tienes",
+           "tienen",
+           "hay",
+           "busco",
+           "estoy buscando",
+           "quiero",
+           "necesito",
+           "me interesa",
+           "mostrar",
+           "mostrame",
+           "mostrarme",
+           "muestrame",
+           "ver",
+           "pasame",
+           "auto",
+           "autos",
+           "vehiculo",
+           "vehiculos",
+           "camioneta",
+           "camionetas",
+           "modelo",
+           "marca",
+           "barato",
+           "economico",
+           "hasta",
+           "desde",
+           "algo",
+           "algun",
+           "alguno",
+           "quiero ver",
+           "precio",
+           "automatico",
+           "automatica",
+           "manual",
+           "nafta",
+           "diesel",
+           "blanco",
+           "negro",
+           "gris",
+           "rojo",
+           "azul",
+           "fiat",
+           "peugeot",
+           "toyota",
+           "ford",
+           "chevrolet",
+           "renault",
+           "volkswagen",
+           "citroen",
+           "honda",
+           "nissan",
+           "jeep",
+           "cronos",
+           "208",
+           "etios",
+           "gol",
+           "onix",
+           "corolla",
+           "hilux",
+           "sandero",
+           "kangoo",
+    ]
+    return contiene_alguna(texto,palabras)
+
 
 
 def es_asesor(texto):
@@ -61,10 +158,16 @@ def es_asesor(texto):
         "contacto",
         "whatsapp",
         "llamar",
-        "hablar"
+        "llamame",
+        "hablar",
+        "hablar con alguien",
+        "quiero hablar",
+        "que me contacten",
+        "pasame con alguien",
     ]
 
-    return any(palabra in texto for palabra in palabras)
+    return contiene_alguna(texto, palabras)
+
 
 def es_compra(texto):
     palabras = [
@@ -72,8 +175,8 @@ def es_compra(texto):
         "comprar",
         "me interesa comprar",
         "quiero avanzar",
-        "quiero señar",
-        "señar",
+        "quiero senar",
+        "senar",
         "reservar",
         "lo quiero",
         "me lo llevo",
@@ -86,11 +189,26 @@ def es_compra(texto):
         "me llevo",
         "esa misma",
         "la quiero",
-        "esa"
+        "me interesa ese",
+        "me interesa esa",
+        "ese me gusta",
+        "esa me gusta",
+        "quiero ese",
+        "quiero esa",
     ]
 
-    return any(palabra in texto for palabra in palabras)
+    return contiene_alguna(texto, palabras)
 
 
 #desde aca procesamos todas las palabras raras dentro del sistema lo que sea que no este del todo bien esto lo puede tomar como una intencion de respuesta o de "compra". la idea es siempre mantener el dialogo 
+
+
+
+
+
+
+
+
+
+
 
